@@ -1,69 +1,109 @@
-# Política de uso das imagens
+# Política de Uso das Imagens
 
-## Regra padrão
+**Última atualização:** 2026-10-07
 
-As imagens publicadas no `follow.white.rabbit` são apresentadas exclusivamente como portfólio e referência do trabalho de Dyogo Viana.
+## Princípio geral
 
-**Não há concessão geral de licença para copiar, baixar, modificar, republicar, comercializar ou reutilizar essas imagens.**
+As imagens publicadas neste portfólio são obras autorais protegidas pela Lei 9.610/98.
+A visualização no site não concede licença de reprodução, distribuição, transformação
+ou uso comercial.
 
-## Uso proibido sem autorização
+## Protocolo de proteção
 
-Não é permitido, sem autorização prévia e expressa:
+Para preservar a integridade autoral e facilitar a prova de autoria em caso de uso
+não autorizado, as imagens publicadas seguem o seguinte protocolo:
 
-1. republicar a imagem integralmente;
-2. publicar a imagem em outro site, portfólio ou rede social;
-3. recortar, editar, redesenhar ou alterar detalhes para apresentar uma versão modificada como obra independente;
-4. utilizar a imagem em publicidade, produtos, capas, materiais editoriais ou campanhas;
-5. remover créditos, identificadores ou informações de direitos;
-6. utilizar as imagens como dataset, treinamento ou avaliação de sistemas de IA, salvo autorização específica ou outra base legal aplicável.
+### 1. Resolução e compressão
 
-## Limitações técnicas
+- **Original privado:** Arquivo-fonte em alta resolução mantido em armazenamento privado.
+- **Versão web:** Imagem reduzida para exibição no site (máximo 1200px no lado maior).
+- **Compressão:** Formato WebP ou JPEG otimizado para web, sem entregar qualidade de impressão.
 
-Nenhuma medida técnica consegue impedir completamente que uma imagem exibida em um navegador seja copiada.
+### 2. Identificação única
 
-Por isso, o projeto adota proteção em camadas:
+Cada imagem publicada recebe um identificador no formato: FWR-ART-AAAA-NNNN
 
-- originais mantidos fora do repositório público;
-- versões específicas para web;
-- resolução limitada ao necessário para apresentação;
-- preservação de identificadores e evidências de autoria;
-- documentação do processo de criação;
-- possibilidade de mecanismos adicionais de proteção antes da publicação.
 
-## Identificação das obras
+Onde:
+- `FWR` = follow.white.rabbit (projeto)
+- `ART` = categoria (arte/imagem)
+- `AAAA` = ano de criação
+- `NNNN` = número sequencial (ex: 0017)
 
-Cada obra poderá receber um identificador interno exclusivo no padrão:
+**Exemplo:** `FWR-ART-2026-0017`
 
-`FWR-ART-YYYY-NNNN`
+Este identificador pode estar presente:
+- No nome do arquivo publicado.
+- Nos metadados C2PA da imagem.
+- No sistema de catalogação interno.
 
-Exemplo:
+### 3. Metadados de proveniência (C2PA)
 
-`FWR-ART-2026-0017`
+As imagens publicadas contêm metadados de proveniência embutidos no padrão C2PA
+(Coalition for Content Provenance and Authenticity), registrando:
 
-O identificador é uma ferramenta de organização e prova auxiliar. Sua presença não substitui a proteção legal conferida pela legislação.
+- Autor (Dyogo Viana)
+- Data de criação
+- Identificador único (FWR-ART-AAAA-NNNN)
+- Histórico de edições (se houver)
+
+Esses metadados são verificáveis por ferramentas compatíveis com C2PA.
+
+### 4. Hash e carimbo de tempo
+
+Cada imagem publicada possui hash criptográfico (SHA-256) registrado com carimbo
+de tempo, constituindo prova de existência e integridade do arquivo em determinada data.
+
+### 5. Marca d'água
+
+**Não há marca d'água visual intrusiva** nas imagens publicadas, para preservar
+a qualidade visual e a experiência de apreciação da obra.
+
+A proteção se dá por:
+- Identificação via metadados C2PA.
+- Identificador único no nome do arquivo.
+- Registro de hash com carimbo de tempo.
+- Aviso jurídico no rodapé do site e em `/legal/copyright.md`.
+
+## Uso não autorizado para treinamento de IA
+
+É **expressamente proibida** a utilização de qualquer imagem deste portfólio para:
+
+- Treinamento de modelos de inteligência artificial.
+- Fine-tuning de modelos generativos.
+- Inferência ou geração de obras derivadas por IA.
+- Extração de estilo ou técnica para fins de replicação por IA.
+
+A violação desta política constitui uso não autorizado, sujeito às penalidades
+da Lei 9.610/98.
+
+## Monitoramento e reação a violações
+
+Em caso de uso não autorizado detectado:
+
+1. **Preservação de evidência:** Captura de URL, data, screenshots e arquivo utilizado.
+2. **Comparação:** Original × cópia integral × versão modificada.
+3. **Prova de autoria:** Arquivo-fonte + histórico de versão + hash + publicação datada.
+4. **Notificação:** Solicitação de remoção ao responsável/plataforma.
+5. **Denúncia:** Uso de mecanismos de copyright da plataforma (DMCA, se aplicável).
+6. **Medida jurídica:** Avaliação de ação legal quando necessário.
 
 ## Solicitação de licença
 
-Para solicitar autorização de uso de uma imagem, o interessado deverá informar:
+Para uso autorizado (comercial, editorial, educacional ou outros fins), entre em contato:
 
-- qual imagem deseja utilizar;
-- finalidade;
-- meio ou plataforma;
-- território;
-- período;
-- alterações pretendidas;
-- eventual exploração comercial.
+**Email:** [INSERIR EMAIL DE CONTATO AQUI]
 
-A autorização, quando concedida, deverá definir expressamente o escopo de uso.
+Cada solicitação será avaliada individualmente, e a licença, se concedida, será
+formalizada por escrito, especificando:
 
-## Infração
+- Escopo de uso.
+- Prazo de vigência.
+- Territorialidade.
+- Valor (se aplicável).
+- Condições de atribuição.
 
-Em caso de uso não autorizado, o responsável poderá estar sujeito às medidas disponíveis ao titular dos direitos segundo a legislação aplicável.
+---
 
-Para preservação de evidências, recomenda-se registrar a URL, data, capturas de tela, arquivo utilizado e relação entre a obra original e a cópia ou versão modificada.
-
-## Terceiros
-
-Imagens ou materiais que pertençam a terceiros permanecem sujeitos às respectivas licenças e direitos. Esta política não concede direitos sobre conteúdos que não sejam de titularidade de Dyogo Viana.
-
-Copyright © 2026 Dyogo Viana.
+**Nota:** Este documento é parte integrante do aviso de direitos autorais do site.
+A violação destas condições constitui infração de direitos autorais.
