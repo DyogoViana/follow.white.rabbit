@@ -1,27 +1,51 @@
-# Direitos autorais e licença
+Copyright (c) 2026 Dyogo Viana. Todos os direitos reservados.
 
-## Todos os direitos reservados
+Este repositório contém obras autorais de Dyogo Viana, incluindo, mas não se limitando a:
+- Código-fonte do site
+- Textos, ensaios e documentação
+- Imagens, ilustrações, fotografias e desenhos
+- Designs de tatuagem e artes visuais
+- Identidade visual e elementos gráficos
 
-Este repositório contém código, textos, imagens, desenhos, fotografias, tatuagens, elementos visuais e outros materiais autorais relacionados ao trabalho de Dyogo Viana.
+RESERVA DE DIREITOS
 
-Salvo indicação expressa em contrário em um arquivo específico, **nenhum conteúdo deste repositório é licenciado para cópia, distribuição, modificação, reutilização, publicação, comercialização ou incorporação em outros projetos sem autorização prévia e expressa do titular dos direitos**.
+Nenhuma parte deste repositório pode ser reproduzida, distribuída, transmitida, adaptada,
+transformada ou utilizada de qualquer forma, seja para fins comerciais ou não comerciais,
+sem autorização prévia, expressa e por escrito do autor.
 
-A disponibilidade pública do repositório no GitHub não constitui concessão de licença de uso das obras ou dos materiais aqui contidos.
+A disponibilização pública deste repositório no GitHub NÃO constitui concessão de licença
+de uso, reprodução ou transformação das obras aqui contidas.
 
-### Código
+PROTEÇÃO LEGAL
 
-O código-fonte também permanece reservado, salvo quando um arquivo, diretório ou documento declarar explicitamente uma licença diferente.
+Este repositório e suas obras são protegidos pela Lei nº 9.610/1998 (Direito Autoral Brasileiro),
+que garante ao autor o direito exclusivo de utilizar, fruir e dispor da obra (Art. 28),
+bem como o direito moral à integridade da obra (Art. 24).
 
-### Imagens e obras artísticas
+A reprodução não autorizada, incluindo adaptações, transformações e uso para treinamento
+de modelos de inteligência artificial, constitui violação de direitos autorais, sujeita
+às penalidades civis e criminais previstas nos Arts. 102 e seguintes da Lei 9.610/98.
 
-As imagens, tatuagens, desenhos, fotografias e demais obras visuais não podem ser copiadas, treinadas, redistribuídas, comercializadas ou reutilizadas sem autorização prévia e expressa, salvo quando a legislação aplicável determinar de outra forma.
+IDENTIFICAÇÃO DAS OBRAS
 
-### Terceiros
+Cada imagem publicada neste portfólio possui um identificador único no formato:
+FWR-ART-AAAA-NNNN (exemplo: FWR-ART-2026-0017)
 
-Materiais de terceiros permanecem sujeitos às respectivas licenças e aos direitos de seus autores.
+Este identificador, combinado com metadados de proveniência (C2PA), histórico de versão
+no Git e registro de data de criação, constitui prova de autoria e titularidade.
 
-### Contato
+USO NÃO AUTORIZADO PARA TREINAMENTO DE IA
 
-Para solicitar autorização de uso, entre em contato com o titular deste projeto por meio do canal oficial indicado no site.
+É expressamente proibida a utilização de qualquer imagem, texto ou obra deste repositório
+para treinamento, fine-tuning ou inferência de modelos de inteligência artificial,
+incluindo modelos de geração de imagem, texto ou código, sem autorização escrita do autor.
 
-Copyright © 2026 Dyogo Viana. Todos os direitos reservados.
+CONTATO
+
+Para solicitações de licença, colaborações ou uso autorizado:
+[INSERIR EMAIL DE CONTATO AQUI]
+
+POLÍTICA COMPLETA DE USO DE IMAGENS
+
+Ver: /legal/image-usage.md
+Ver: /legal/copyright.md
