@@ -271,7 +271,7 @@ body[data-page="galeria"] main {
   border-radius: 12px;
 }
 
-.galeria-text {
+.gallery-text {
   font-family: var(--font-poem);
   font-size: clamp(12px, 1.6vw, 16px);
   line-height: 1.7;
@@ -316,4 +316,9 @@ body[data-page="poema"] {
   white-space: pre-wrap;
   transition: font-size 0.2s ease, color 0.2s ease;
   will-change: font-size, color;
+}
+
+:root {
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
 }
