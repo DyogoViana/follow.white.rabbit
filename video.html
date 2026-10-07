@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self';
+                 script-src 'self';
+                 style-src 'self' https://fonts.googleapis.com;
+                 font-src https://fonts.gstatic.com;
+                 img-src 'self' data:;
+                 frame-src https://player.vimeo.com;
+                 connect-src 'none';">
+  <style>
+    :root {
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Istok+Web&family=Inter&family=Georgia&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <title>video — follow.white.rabbit</title>
+</head>
+<body data-page="video">
+  <nav id="sidebar" aria-label="Navegação principal">
+    <div class="nav-rail" aria-hidden="true">
+      <div class="nav-thumb" id="navThumb"></div>
+    </div>
+    <ul class="nav-menu">
+      <li class="nav-item active" data-page="video">
+        <a href="video.html" aria-label="Ir para vídeo">
+          <span class="dot" aria-hidden="true"></span>
+          <span class="label">video</span>
+        </a>
+      </li>
+      <li class="nav-item" data-page="galeria">
+        <a href="galeria.html" aria-label="Ir para galeria">
+          <span class="dot" aria-hidden="true"></span>
+          <span class="label">galeria</span>
+        </a>
+      </li>
+      <li class="nav-item" data-page="poema">
+        <a href="poema.html" aria-label="Ir para poema">
+          <span class="dot" aria-hidden="true"></span>
+          <span class="label">poema</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <main>
+    <div class="video-wrapper">
+      <iframe
+        src="https://player.vimeo.com/video/SEU_ID_VIMEO?autoplay=0&title=0&byline=0"
+        allow="fullscreen; picture-in-picture"
+        allowfullscreen
+        title="follow.white.rabbit — vídeo"
+        loading="lazy">
+      </iframe>
+    </div>
+  </main>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

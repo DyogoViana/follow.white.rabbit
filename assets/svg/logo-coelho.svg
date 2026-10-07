@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" role="img" aria-label="Logo follow.white.rabbit">
+  <rect width="180" height="180" rx="24" fill="#F3EFEA"/>
+  <path d="M62 116c0-29 22-52 50-52 29 0 52 23 52 52 0 11-4 22-11 30-11 12-23 18-41 18-18 0-30-6-41-18-7-8-11-19-11-30Zm41-35c-18 0-32 14-32 32 0 8 2 15 7 21 6 8 16 12 25 12 8 0 18-4 25-12 5-6 7-13 7-21 0-18-14-32-32-32Zm-4 28h8v14h-8zm-6-17h20v8H93zm-10 18h12v8H83zm31-31h8v16h-8zm-3 41h14v8H111zm-25-2h8v14h-8zm36 0h8v14h-8z" fill="#1A1A1A"/>
+  <circle cx="90" cy="68" r="8" fill="#F0E7E2"/>
+</svg>

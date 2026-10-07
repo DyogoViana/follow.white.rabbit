@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self';
+                 script-src 'self';
+                 style-src 'self' https://fonts.googleapis.com;
+                 font-src https://fonts.gstatic.com;
+                 img-src 'self' data:;
+                 frame-src https://player.vimeo.com;
+                 connect-src 'none';">
+  <style>
+    :root {
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Istok+Web&family=Inter&family=Georgia&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <title>galeria — follow.white.rabbit</title>
+</head>
+<body data-page="galeria">
+  <nav id="sidebar" aria-label="Navegação principal">
+    <div class="nav-rail" aria-hidden="true">
+      <div class="nav-thumb" id="navThumb"></div>
+    </div>
+    <ul class="nav-menu">
+      <li class="nav-item" data-page="video">
+        <a href="video.html" aria-label="Ir para vídeo">
+          <span class="dot" aria-hidden="true"></span>
+          <span class="label">video</span>
+        </a>
+      </li>
+      <li class="nav-item active" data-page="galeria">
+        <a href="galeria.html" aria-label="Ir para galeria">
+          <span class="dot" aria-hidden="true"></span>
+          <span class="label">galeria</span>
+        </a>
+      </li>
+      <li class="nav-item" data-page="poema">
+        <a href="poema.html" aria-label="Ir para poema">
+          <span class="dot" aria-hidden="true"></span>
+          <span class="label">poema</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <main class="gallery-page">
+    <div class="gallery-grid">
+      <figure class="gallery-slide">
+        <img src="assets/img/2-Daruma.png" alt="Daruma — slide 1" loading="lazy" width="900" height="1200">
+        <figcaption class="gallery-text">
+          <p>No ventre, 叶: o desejo que se cumpre agora;</p>
+        </figcaption>
+      </figure>
+
+      <figure class="gallery-slide">
+        <img src="assets/img/3-Mar.png" alt="Mar — slide 2" loading="lazy" width="900" height="1200">
+        <figcaption class="gallery-text">
+          <p>debaixo, o mar faz de cada gesto uma espiral,<br>
+          e nada é à toa, mesmo sem saber a hora.<br>
+          Há desenho no que ninguém decifrou, e é sinal;<br>
+          o futuro, que não controlo, atravesso, leve,<br>
+          e o mar segue inteiro, sereno e natural.</p>
+        </figcaption>
+      </figure>
+
+      <figure class="gallery-slide">
+        <img src="assets/img/4-Arabescos.png" alt="Arabescos — slide 3" loading="lazy" width="900" height="1200">
+        <figcaption class="gallery-text">
+          <p>Em volta, duas notas num arabesco breve:<br>
+          duas cores, uma forma, e o compasso — meu — se expressa;<br>
+          juntas, o que bate no peito, em curva, se escreve.</p>
+        </figcaption>
+      </figure>
+
+      <figure class="gallery-slide">
+        <img src="assets/img/5-Fio_da_Ariadne.png" alt="Fio da Ariadne — slide 4" loading="lazy" width="900" height="1200">
+        <figcaption class="gallery-text">
+          <p>Na base, ouro em círculos dentro de círculos; o fio começa,<br>
+          dá voltas, segue até a luz, só o próximo metro alcança;<br>
+          o metro basta, e o resto vem sem pressa.</p>
+        </figcaption>
+      </figure>
+
+      <figure class="gallery-slide">
+        <img src="assets/img/6-Flor.png" alt="Flor — slide 5" loading="lazy" width="900" height="1200">
+        <figcaption class="gallery-text">
+          <p>Do lado de fora, onde o dia chega primeiro, a flor avança:<br>
+          setembro: primavera — e tudo abre para o dia,<br>
+          e a estação é minha, e é só esperança.</p>
+        </figcaption>
+      </figure>
+
+      <figure class="gallery-slide">
+        <img src="assets/img/7-Luz.png" alt="Luz — slide 6" loading="lazy" width="900" height="1200">
+        <figcaption class="gallery-text">
+          <p>A luz não some: fica pequena, e é ela que me guia;<br>
+          num lado, noite e um ponto aceso; no outro, o céu aberto;<br>
+          os dois juntos, e a mesma luz, acesa por si, em harmonia.</p>
+        </figcaption>
+      </figure>
+
+      <figure class="gallery-slide">
+        <img src="assets/img/8-Circulo.png" alt="Círculo — slide 7" loading="lazy" width="900" height="1200">
+        <figcaption class="gallery-text">
+          <p>Por inteiro, o braço é um círculo, e o que desce sobe, por certo;<br>
+          sem começo, sem ponta, a curva que se fecha em si:<br>
+          nada falta, nada sobra, e tudo soa em concerto.<br>
+          E, de volta ao começo, estou aqui.</p>
+        </figcaption>
+      </figure>
+
+      <figure class="gallery-slide">
+        <img src="assets/img/9-Inteiro.png" alt="Inteiro — slide 8" loading="lazy" width="900" height="1200">
+        <figcaption class="gallery-text">
+          <p>O que desce não se perde: volta ao chão,<br>
+          pois o peso sabe o caminho de voltar;<br>
+          o corpo que cai é o mesmo em ascensão.</p>
+        </figcaption>
+      </figure>
+    </div>
+  </main>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
