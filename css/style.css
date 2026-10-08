@@ -375,6 +375,12 @@ body[data-page="galeria"] main {
   -webkit-user-select: none;
 }
 
+.gallery-slide--rot .gallery-img {
+  max-width: none;
+  max-height: none;
+  object-fit: none;
+}
+
 body[data-page="galeria"] .gallery-text {
   position: absolute;
   width: 1px;
