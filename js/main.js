@@ -377,7 +377,8 @@ document.addEventListener('contextmenu', function (e) {
   var slides = [].slice.call(car.querySelectorAll('.gallery-slide'));
   var rots = [].slice.call(car.querySelectorAll('.gallery-slide--rot .gallery-img'));
   var sizeRot = function () {
-    var portraitOk = document.body.classList.contains('allow-portrait');
+    var portraitOk = document.body.classList.contains('allow-portrait')
+      && window.matchMedia('(orientation: portrait)').matches;
     rots.forEach(function (im) {
       if (portraitOk) {
         im.style.width = '';
@@ -389,11 +390,11 @@ document.addEventListener('contextmenu', function (e) {
       if (!im.naturalWidth) return;
       var s = im.closest('.gallery-slide'), W = s.clientWidth, H = s.clientHeight;
       var r = im.naturalHeight / im.naturalWidth;
-      var Wv = Math.max(W, H * r), Hv = Wv / r;
+      var Vh = Math.min(H, W / r), Vw = Vh * r;
       im.style.maxWidth = 'none';
       im.style.maxHeight = 'none';
-      im.style.width = Hv + 'px';
-      im.style.height = Wv + 'px';
+      im.style.width = Vh + 'px';
+      im.style.height = Vw + 'px';
     });
   };
   var idx = function () { return Math.round(car.scrollLeft / car.clientWidth); };

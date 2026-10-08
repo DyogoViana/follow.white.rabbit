@@ -375,10 +375,20 @@ body[data-page="galeria"] main {
   -webkit-user-select: none;
 }
 
-.gallery-slide--rot .gallery-img {
-  max-width: none;
-  max-height: none;
-  object-fit: none;
+@media (orientation: landscape) {
+  .gallery-slide--rot .gallery-img {
+    max-width: none;
+    max-height: none;
+    object-fit: none;
+  }
+}
+
+@media (orientation: portrait) {
+  body[data-page="galeria"].allow-portrait .gallery-slide--rot .gallery-img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
 }
 
 body[data-page="galeria"] .gallery-text {
