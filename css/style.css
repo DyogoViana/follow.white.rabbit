@@ -341,6 +341,9 @@ body[data-page="galeria"] main {
   height: auto;
   object-fit: contain;
   display: block;
+  -webkit-touch-callout: none;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 body[data-page="galeria"] .gallery-text {

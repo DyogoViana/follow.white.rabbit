@@ -352,26 +352,36 @@ if (shareBtn) {
   };
 
   shareBtn.addEventListener('click', async () => {
+    const label = shareBtn.querySelector('.share-label');
+    const original = label ? label.textContent : '';
+    const flash = (msg, ms) => {
+      if (!label) return;
+      label.textContent = msg;
+      setTimeout(() => {
+        label.textContent = original;
+      }, ms || 1600);
+    };
+    const copyFallback = async () => {
+      try {
+        await navigator.clipboard.writeText(`${payload.url} — ${payload.text}`);
+        flash('link copiado');
+      } catch (_) {
+        flash('não foi possível copiar', 2400);
+      }
+    };
     if (navigator.share) {
       try {
         await navigator.share(payload);
-      } catch (_) {
-        // Sharing may be cancelled by the user.
+        flash('compartilhado');
+      } catch (err) {
+        if (err && err.name === 'AbortError') {
+          // Cancelled: no feedback needed.
+        } else {
+          await copyFallback();
+        }
       }
     } else {
-      try {
-        await navigator.clipboard.writeText(`${payload.url} — ${payload.text}`);
-        const label = shareBtn.querySelector('.share-label');
-        if (label) {
-          const original = label.textContent;
-          label.textContent = 'link copiado';
-          setTimeout(() => {
-            label.textContent = original;
-          }, 1500);
-        }
-      } catch (_) {
-        // Clipboard may be unavailable in insecure contexts.
-      }
+      await copyFallback();
     }
   });
 }
@@ -390,3 +400,8 @@ window.setNavThumb=function(){
 setNavThumb();
 window.addEventListener('resize',function(){setNavThumb();},{passive:true});
 window.addEventListener('orientationchange',function(){setNavThumb();});
+
+/* IMG-FRICTION v8 — fricção, não proteção: não impede print, devtools nem URL direta */
+document.addEventListener('contextmenu', function (e) {
+  if (e.target.closest && e.target.closest('.gallery-img')) e.preventDefault();
+});
