@@ -55,8 +55,8 @@ if (poemScroll) {
 
   function updatePoem() {
     const portrait = window.matchMedia('(orientation: portrait)').matches;
-    const FONT_MIN = portrait ? 8 : 7;
-    const FONT_MAX = portrait ? 24 : 15;
+    const FONT_MIN = portrait ? 8 : 6;
+    const FONT_MAX = portrait ? 28 : 26;
     const strophes = document.querySelectorAll('.strophe');
     const viewCY = poemScroll.scrollTop + poemScroll.clientHeight / 2;
     const maxDist = poemScroll.clientHeight * 0.55;
@@ -202,8 +202,13 @@ function handleTouchEnd(event) {
   if (!touchActive || !event.changedTouches || !event.changedTouches[0]) return;
 
   const touch = event.changedTouches[0];
-  const deltaX = touch.clientX - touchStartX;
-  const deltaY = touch.clientY - touchStartY;
+  let deltaX = touch.clientX - touchStartX;
+  let deltaY = touch.clientY - touchStartY;
+  const galleryPortrait = document.body.dataset.page === 'galeria'
+    && window.matchMedia('(orientation: portrait)').matches;
+  if (galleryPortrait) {
+    [deltaX, deltaY] = [deltaY, -deltaX];
+  }
   const absX = Math.abs(deltaX);
   const absY = Math.abs(deltaY);
   const edgeLeft = touchStartX <= EDGE_ZONE;
@@ -214,6 +219,12 @@ function handleTouchEnd(event) {
   touchActive = false;
 
   if (Math.max(absX, absY) < 60) return;
+
+  if (document.body.dataset.page === 'galeria' && deltaX < -50
+      && galleryCarousel.scrollLeft + galleryCarousel.clientWidth >= galleryCarousel.scrollWidth - 2) {
+    window.location.href = 'poema.html';
+    return;
+  }
 
   if (document.body.dataset.page === 'poema') {
     if (absX > absY && edgeLeft && deltaX > 0) {
@@ -270,6 +281,32 @@ if (window.matchMedia('(pointer: coarse)').matches) {
   document.addEventListener('touchstart', handleTouchStart, { passive: true });
   document.addEventListener('touchend', handleTouchEnd, { passive: true });
 }
+
+(function () {
+  const vf = document.getElementById('vimeoPlayer');
+  if (!vf) return;
+
+  function pause() {
+    try {
+      vf.contentWindow.postMessage(JSON.stringify({ method: 'pause' }), 'https://player.vimeo.com');
+    } catch (error) {
+      console.error('Unable to pause Vimeo playback.', error);
+    }
+  }
+
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden) pause();
+  });
+  window.addEventListener('pagehide', pause);
+
+  const originalNavigatePage = window.navigatePage;
+  if (typeof originalNavigatePage === 'function') {
+    window.navigatePage = function () {
+      pause();
+      return originalNavigatePage.apply(this, arguments);
+    };
+  }
+})();
 
 if (!poemScroll && !galleryCarousel) {
   const active = document.querySelector('.nav-item.active');
