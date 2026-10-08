@@ -19,6 +19,9 @@
   if (activeIndex >= 0) {
     const ratio = items.length > 1 ? activeIndex / (items.length - 1) : 0;
     setNavThumb(ratio);
+  } else {
+    const thumb = document.getElementById('navThumb');
+    if (thumb) thumb.style.opacity = '0';
   }
 })();
 
@@ -32,6 +35,7 @@ function setNavThumb(ratio) {
   const max = Math.max(0, track.clientWidth - thumb.clientWidth);
   const x = Math.max(0, Math.min(max, max * ratio));
   thumb.style.transform = `translateX(${x}px)`;
+  thumb.style.opacity = '1';
 }
 
 const poemScroll = document.getElementById('poemScroll');
@@ -51,8 +55,8 @@ if (poemScroll) {
 
   function updatePoem() {
     const portrait = window.matchMedia('(orientation: portrait)').matches;
-    const FONT_MIN = portrait ? 9 : 7;
-    const FONT_MAX = portrait ? 18 : 15;
+    const FONT_MIN = portrait ? 8 : 7;
+    const FONT_MAX = portrait ? 24 : 15;
     const strophes = document.querySelectorAll('.strophe');
     const viewCY = poemScroll.scrollTop + poemScroll.clientHeight / 2;
     const maxDist = poemScroll.clientHeight * 0.55;
@@ -210,6 +214,13 @@ function handleTouchEnd(event) {
   touchActive = false;
 
   if (Math.max(absX, absY) < 60) return;
+
+  if (document.body.dataset.page === 'poema') {
+    if (absX > absY && edgeLeft && deltaX > 0) {
+      navigatePage('prev');
+    }
+    return;
+  }
 
   if (Math.abs(deltaX) > Math.abs(deltaY)) {
     if (document.body.dataset.page === 'galeria') {
