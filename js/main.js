@@ -93,3 +93,14 @@ if (!poemScroll) {
     }
   }
 }
+
+/* JS-OVERRIDE v1 (2026-10-08) - append-only; apague este bloco p/ reverter */
+setNavThumb = function(){
+  var items=[].slice.call(document.querySelectorAll('.nav-item'));
+  var idx=-1; items.forEach(function(it,i){ if(it.classList.contains('active')) idx=i; });
+  var thumb=document.getElementById('navThumb'); if(!thumb) return;
+  if(idx<0){ thumb.style.opacity='0'; thumb.style.transform='translateX(0)'; return; }
+  thumb.style.opacity='1'; thumb.style.transform='translateX('+(idx*100)+'%)';
+};
+setNavThumb();
+window.addEventListener('resize', setNavThumb, {passive:true});
