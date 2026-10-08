@@ -202,13 +202,8 @@ function handleTouchEnd(event) {
   if (!touchActive || !event.changedTouches || !event.changedTouches[0]) return;
 
   const touch = event.changedTouches[0];
-  let deltaX = touch.clientX - touchStartX;
-  let deltaY = touch.clientY - touchStartY;
-  const galleryPortrait = document.body.dataset.page === 'galeria'
-    && window.matchMedia('(orientation: portrait)').matches;
-  if (galleryPortrait) {
-    [deltaX, deltaY] = [deltaY, -deltaX];
-  }
+  const deltaX = touch.clientX - touchStartX;
+  const deltaY = touch.clientY - touchStartY;
   const absX = Math.abs(deltaX);
   const absY = Math.abs(deltaY);
   const edgeLeft = touchStartX <= EDGE_ZONE;
@@ -220,12 +215,6 @@ function handleTouchEnd(event) {
 
   if (Math.max(absX, absY) < 60) return;
 
-  if (document.body.dataset.page === 'galeria' && deltaX < -50
-      && galleryCarousel.scrollLeft + galleryCarousel.clientWidth >= galleryCarousel.scrollWidth - 2) {
-    window.location.href = 'poema.html';
-    return;
-  }
-
   if (document.body.dataset.page === 'poema') {
     if (absX > absY && edgeLeft && deltaX > 0) {
       navigatePage('prev');
@@ -233,27 +222,9 @@ function handleTouchEnd(event) {
     return;
   }
 
+  if (document.body.dataset.page === 'galeria') return;
+
   if (Math.abs(deltaX) > Math.abs(deltaY)) {
-    if (document.body.dataset.page === 'galeria') {
-      const slides = [...document.querySelectorAll('.gallery-slide')];
-      const index = slides.findIndex(slide => {
-        const left = slide.offsetLeft;
-        return Math.abs(left - galleryCarousel.scrollLeft) < 4;
-      });
-      const isFirst = index <= 0;
-      const isLast = index >= slides.length - 1;
-
-      if (edgeLeft && deltaX > 0 && isFirst) {
-        navigatePage('prev');
-        return;
-      }
-
-      if (edgeRight && deltaX < 0 && isLast) {
-        navigatePage('next');
-        return;
-      }
-    }
-
     if (edgeLeft && deltaX > 0) {
       navigatePage('prev');
       return;
@@ -386,22 +357,82 @@ if (shareBtn) {
   });
 }
 
-/* THUMB-ALIGN v7 */
-window.setNavThumb=function(){
-  var thumb=document.getElementById('navThumb'); if(!thumb)return;
-  var rail=thumb.closest('.nav-rail'); if(!rail)return;
-  var active=document.querySelector('.nav-item.active');
-  if(!active){thumb.style.opacity='0';thumb.style.transform='translateX(0)';return;}
-  var w=69; thumb.style.opacity='1'; thumb.style.width=w+'px';
-  var r=rail.getBoundingClientRect(), a=active.getBoundingClientRect();
-  var x=(a.left-r.left)+(a.width-w)/2;
-  thumb.style.transform='translateX('+Math.round(Math.max(0,x))+'px)';
-};
-setNavThumb();
-window.addEventListener('resize',function(){setNavThumb();},{passive:true});
-window.addEventListener('orientationchange',function(){setNavThumb();});
-
 /* IMG-FRICTION v8 — fricção, não proteção: não impede print, devtools nem URL direta */
 document.addEventListener('contextmenu', function (e) {
   if (e.target.closest && e.target.closest('.gallery-img')) e.preventDefault();
 });
+
+(function () {
+  var car = document.getElementById('galleryCarousel');
+  if (!car) return;
+  var slides = [].slice.call(car.querySelectorAll('.gallery-slide'));
+  var go = function (i) {
+    i = Math.max(0, Math.min(slides.length - 1, i));
+    car.scrollTo({ left: slides[i].offsetLeft, behavior: 'smooth' });
+  };
+  var idx = function () { return Math.round(car.scrollLeft / car.clientWidth); };
+  var atEnd = function () { return car.scrollLeft + car.clientWidth >= car.scrollWidth - 2; };
+  var x0 = null, y0 = null;
+  car.addEventListener('touchstart', function (e) {
+    x0 = e.touches[0].clientX;
+    y0 = e.touches[0].clientY;
+  }, { passive: true });
+  car.addEventListener('touchend', function (e) {
+    if (x0 === null) return;
+    var dx = e.changedTouches[0].clientX - x0;
+    var dy = e.changedTouches[0].clientY - y0;
+    x0 = y0 = null;
+    if (Math.abs(dx) >= Math.abs(dy)) {
+      if (dx < -50 && idx() === slides.length - 1 && atEnd()) {
+        location.href = 'poema.html';
+      }
+    } else if (dy < -50) {
+      go(idx() + 1);
+    } else if (dy > 50) {
+      go(idx() - 1);
+    }
+  }, { passive: true });
+})();
+
+(function () {
+  var thumb = document.getElementById('navThumb');
+  if (!thumb) return;
+  var rail = thumb.closest('.nav-rail');
+  if (!rail) return;
+  var W = 69;
+  var place = function (x, animate) {
+    thumb.style.opacity = '1';
+    thumb.style.width = W + 'px';
+    if (!animate) thumb.style.transition = 'none';
+    thumb.style.transform = 'translateX(' + Math.round(Math.max(0, x)) + 'px)';
+    if (!animate) {
+      void thumb.offsetWidth;
+      thumb.style.transition = '';
+    }
+  };
+  var max = function () { return rail.clientWidth - W; };
+  var car = document.getElementById('galleryCarousel');
+  var poem = document.getElementById('poemScroll');
+  var active = document.querySelector('.nav-item.active');
+  if (car) {
+    var n = car.querySelectorAll('.gallery-slide').length || 1;
+    var u = function (a) {
+      place((Math.round(car.scrollLeft / car.clientWidth) / (n - 1 || 1)) * max(), a);
+    };
+    car.addEventListener('scroll', function () { u(true); }, { passive: true });
+    u(false);
+    window.addEventListener('resize', function () { u(false); }, { passive: true });
+  } else if (poem) {
+    var u2 = function (a) {
+      place((poem.scrollTop / ((poem.scrollHeight - poem.clientHeight) || 1)) * max(), a);
+    };
+    poem.addEventListener('scroll', function () { u2(true); }, { passive: true });
+    u2(false);
+    window.addEventListener('resize', function () { u2(false); }, { passive: true });
+  } else if (active) {
+    var r = rail.getBoundingClientRect(), b = active.getBoundingClientRect();
+    place((b.left - r.left) + (b.width - W) / 2, false);
+  } else {
+    thumb.style.opacity = '0';
+  }
+})();

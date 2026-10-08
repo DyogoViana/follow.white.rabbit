@@ -89,7 +89,7 @@ main {
   display: block;
   border-radius: 50%;
   filter: grayscale(1) opacity(0.55);
-  transition: filter var(--transition), opacity var(--transition);
+  transition: filter var(--transition), opacity var(--transition), transform var(--transition);
 }
 
 .nav-logo:hover img,
@@ -173,6 +173,30 @@ main {
 
 .nav-item.active .dot {
   background: #8BBF12;
+}
+
+.share-btn:hover,
+.share-btn:focus-visible {
+  background: #8BBF12;
+  border-color: #8BBF12;
+  color: #18191A;
+}
+
+.nav-item a:hover .dot,
+.nav-item a:focus-visible .dot {
+  background: #8BBF12;
+  transition: none;
+}
+
+.nav-item a:hover .label,
+.nav-item a:focus-visible .label {
+  color: #8BBF12;
+}
+
+.nav-logo:hover img,
+.nav-logo:focus-visible img {
+  filter: none;
+  transform: scale(1.06);
 }
 
 .nav-rail {
