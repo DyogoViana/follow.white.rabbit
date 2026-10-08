@@ -397,6 +397,27 @@ body[data-page="poema"] {
   will-change: font-size, color;
 }
 
+.share-btn {
+  min-width: var(--touch-min);
+  min-height: var(--touch-min);
+  padding: 0.75rem 1.25rem;
+  border: 1px solid var(--c-poem-far);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--c-poem-hero);
+  font: inherit;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.share-btn.is-revealed,
+.share-btn:focus-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     transition-duration: 0.01ms !important;

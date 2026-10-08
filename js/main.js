@@ -279,3 +279,51 @@ window.addEventListener('resize', () => {
     setNavThumb(ratio);
   }
 }, { passive: true });
+
+const shareBtn = document.querySelector('.share-btn');
+if (shareBtn) {
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          shareBtn.classList.add('is-revealed');
+          observer.unobserve(shareBtn);
+        }
+      });
+    }, { threshold: 0.4 });
+    observer.observe(shareBtn);
+  } else {
+    shareBtn.classList.add('is-revealed');
+  }
+
+  const url = 'https://dyogoviana.github.io/follow.white.rabbit/';
+  const payload = {
+    title: 'follow.white.rabbit',
+    text: 'Tatuagens de Dyogo Viana — @follow.white.rabbit',
+    url
+  };
+
+  shareBtn.addEventListener('click', async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share(payload);
+      } catch (_) {
+        // Sharing may be cancelled by the user.
+      }
+    } else {
+      try {
+        await navigator.clipboard.writeText(`${payload.url} — ${payload.text}`);
+        const label = shareBtn.querySelector('.share-label');
+        if (label) {
+          const original = label.textContent;
+          label.textContent = 'link copiado';
+          setTimeout(() => {
+            label.textContent = original;
+          }, 1500);
+        }
+      } catch (_) {
+        // Clipboard may be unavailable in insecure contexts.
+      }
+    }
+  });
+}
