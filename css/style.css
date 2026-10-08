@@ -360,7 +360,7 @@ body[data-page="galeria"] main {
 }
 
 .gallery-slide--rot .gallery-img {
-  transform: rotate(90deg);
+  transform: rotate(-90deg);
 }
 
 .gallery-img {

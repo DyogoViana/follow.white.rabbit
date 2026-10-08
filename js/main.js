@@ -75,26 +75,7 @@ if (poemScroll) {
 
 const galleryCarousel = document.getElementById('galleryCarousel');
 if (galleryCarousel) {
-  const slides = [...galleryCarousel.querySelectorAll('.gallery-slide')];
-  const GALLERY_KEY = 'fwr_gallery_slide';
-  const savedIndex = parseInt(localStorage.getItem(GALLERY_KEY) || '0', 10);
-
-  if (slides[savedIndex] && !Number.isNaN(savedIndex)) {
-    galleryCarousel.scrollLeft = slides[savedIndex].offsetLeft;
-  }
-
-  let galleryTimer;
-  const updateGallery = () => {
-    const index = Math.min(slides.length - 1, Math.max(0, Math.round(galleryCarousel.scrollLeft / galleryCarousel.clientWidth)));
-    clearTimeout(galleryTimer);
-    galleryTimer = setTimeout(() => {
-      localStorage.setItem(GALLERY_KEY, index);
-    }, 400);
-  };
-
-  galleryCarousel.addEventListener('scroll', updateGallery, { passive: true });
-  updateGallery();
-  window.addEventListener('resize', updateGallery, { passive: true });
+  galleryCarousel.scrollLeft = 0;
 }
 
 const videoWrapper = document.querySelector('.video-wrapper');
@@ -326,7 +307,6 @@ document.addEventListener('contextmenu', function (e) {
     car.scrollTo({ left: slides[i].offsetLeft, behavior: 'smooth' });
   };
   var idx = function () { return Math.round(car.scrollLeft / car.clientWidth); };
-  var atEnd = function () { return car.scrollLeft + car.clientWidth >= car.scrollWidth - 2; };
   var x0 = null, y0 = null;
   car.addEventListener('touchstart', function (e) {
     x0 = e.touches[0].clientX;
@@ -338,7 +318,7 @@ document.addEventListener('contextmenu', function (e) {
     var dy = e.changedTouches[0].clientY - y0;
     x0 = y0 = null;
     if (Math.abs(dx) >= Math.abs(dy)) {
-      if (dx < -50 && idx() === slides.length - 1 && atEnd()) {
+      if (dx < -50 && idx() === slides.length - 1) {
         location.href = 'poema.html';
       }
     } else if (dy < -50) {
@@ -409,11 +389,11 @@ document.addEventListener('contextmenu', function (e) {
       if (!im.naturalWidth) return;
       var s = im.closest('.gallery-slide'), W = s.clientWidth, H = s.clientHeight;
       var r = im.naturalHeight / im.naturalWidth;
-      var hd = Math.min(W, H * r), wd = hd / r;
+      var Wv = Math.max(W, H * r), Hv = Wv / r;
       im.style.maxWidth = 'none';
       im.style.maxHeight = 'none';
-      im.style.width = wd + 'px';
-      im.style.height = hd + 'px';
+      im.style.width = Hv + 'px';
+      im.style.height = Wv + 'px';
     });
   };
   var idx = function () { return Math.round(car.scrollLeft / car.clientWidth); };
