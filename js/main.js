@@ -375,3 +375,18 @@ if (shareBtn) {
     }
   });
 }
+
+/* THUMB-ALIGN v7 */
+window.setNavThumb=function(){
+  var thumb=document.getElementById('navThumb'); if(!thumb)return;
+  var rail=thumb.closest('.nav-rail'); if(!rail)return;
+  var active=document.querySelector('.nav-item.active');
+  if(!active){thumb.style.opacity='0';thumb.style.transform='translateX(0)';return;}
+  var w=69; thumb.style.opacity='1'; thumb.style.width=w+'px';
+  var r=rail.getBoundingClientRect(), a=active.getBoundingClientRect();
+  var x=(a.left-r.left)+(a.width-w)/2;
+  thumb.style.transform='translateX('+Math.round(Math.max(0,x))+'px)';
+};
+setNavThumb();
+window.addEventListener('resize',function(){setNavThumb();},{passive:true});
+window.addEventListener('orientationchange',function(){setNavThumb();});
