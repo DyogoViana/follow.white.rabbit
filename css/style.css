@@ -175,22 +175,19 @@ main {
   background: #8BBF12;
 }
 
-.share-btn:hover,
-.share-btn:focus-visible {
-  background: #8BBF12;
-  border-color: #8BBF12;
-  color: #18191A;
-}
-
 .nav-item a:hover .dot,
 .nav-item a:focus-visible .dot {
   background: #8BBF12;
-  transition: none;
 }
 
 .nav-item a:hover .label,
 .nav-item a:focus-visible .label {
   color: #8BBF12;
+}
+
+.nav-item .dot,
+.nav-item .label {
+  transition: none;
 }
 
 .nav-logo:hover img,
@@ -358,6 +355,14 @@ body[data-page="galeria"] main {
   background: #0E2D3A;
 }
 
+.gallery-slide--rot {
+  overflow: hidden;
+}
+
+.gallery-slide--rot .gallery-img {
+  transform: rotate(90deg);
+}
+
 .gallery-img {
   max-width: 100%;
   max-height: 100%;
@@ -502,7 +507,7 @@ body[data-page="poema"] main {
 }
 
 @media (orientation: portrait) {
-  body[data-page="galeria"] {
+  body[data-page="galeria"]:not(.allow-portrait) {
     position: fixed;
     top: 0;
     left: 0;
@@ -513,6 +518,18 @@ body[data-page="poema"] main {
     overflow: hidden;
   }
 
+  body[data-page="galeria"].allow-portrait {
+    position: static;
+    width: auto;
+    height: auto;
+    transform: none;
+    overflow: visible;
+  }
+
+  body[data-page="galeria"].allow-portrait .gallery-slide--rot .gallery-img {
+    transform: none;
+  }
+
   .finale-media {
     flex-direction: column;
   }
@@ -521,6 +538,13 @@ body[data-page="poema"] main {
     width: 100%;
     height: 60dvh;
   }
+}
+
+.share-btn:hover,
+.share-btn:focus-visible {
+  background: #8BBF12;
+  border-color: #8BBF12;
+  color: #18191A;
 }
 
 @media (prefers-reduced-motion: reduce) {

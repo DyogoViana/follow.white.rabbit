@@ -15,28 +15,7 @@
     }
   });
 
-  const activeIndex = items.findIndex(item => item.classList.contains('active'));
-  if (activeIndex >= 0) {
-    const ratio = items.length > 1 ? activeIndex / (items.length - 1) : 0;
-    setNavThumb(ratio);
-  } else {
-    const thumb = document.getElementById('navThumb');
-    if (thumb) thumb.style.opacity = '0';
-  }
 })();
-
-function setNavThumb(ratio) {
-  const thumb = document.getElementById('navThumb');
-  if (!thumb) return;
-
-  const track = thumb.closest('.nav-rail');
-  if (!track) return;
-
-  const max = Math.max(0, track.clientWidth - thumb.clientWidth);
-  const x = Math.max(0, Math.min(max, max * ratio));
-  thumb.style.transform = `translateX(${x}px)`;
-  thumb.style.opacity = '1';
-}
 
 const poemScroll = document.getElementById('poemScroll');
 
@@ -77,8 +56,6 @@ if (poemScroll) {
       el.style.color = color;
     });
 
-    const ratio = poemScroll.scrollTop / (poemScroll.scrollHeight - poemScroll.clientHeight || 1);
-    setNavThumb(isNaN(ratio) ? 0 : ratio);
   }
 
   poemScroll.scrollTop = 0;
@@ -109,8 +86,6 @@ if (galleryCarousel) {
   let galleryTimer;
   const updateGallery = () => {
     const index = Math.min(slides.length - 1, Math.max(0, Math.round(galleryCarousel.scrollLeft / galleryCarousel.clientWidth)));
-    const ratio = slides.length > 1 ? index / (slides.length - 1) : 0;
-    setNavThumb(ratio);
     clearTimeout(galleryTimer);
     galleryTimer = setTimeout(() => {
       localStorage.setItem(GALLERY_KEY, index);
@@ -279,26 +254,6 @@ if (window.matchMedia('(pointer: coarse)').matches) {
   }
 })();
 
-if (!poemScroll && !galleryCarousel) {
-  const active = document.querySelector('.nav-item.active');
-  if (active) {
-    const items = [...document.querySelectorAll('.nav-item')];
-    const index = items.findIndex(item => item === active);
-    const ratio = items.length > 1 ? index / (items.length - 1) : 0;
-    setNavThumb(ratio);
-  }
-}
-
-window.addEventListener('resize', () => {
-  const active = document.querySelector('.nav-item.active');
-  if (active) {
-    const items = [...document.querySelectorAll('.nav-item')];
-    const index = items.findIndex(item => item === active);
-    const ratio = items.length > 1 ? index / (items.length - 1) : 0;
-    setNavThumb(ratio);
-  }
-}, { passive: true });
-
 const shareBtn = document.querySelector('.share-btn');
 if (shareBtn) {
   if ('IntersectionObserver' in window) {
@@ -399,40 +354,80 @@ document.addEventListener('contextmenu', function (e) {
   if (!thumb) return;
   var rail = thumb.closest('.nav-rail');
   if (!rail) return;
-  var W = 69;
-  var place = function (x, animate) {
-    thumb.style.opacity = '1';
+  var W = 69, KEY = 'fwr_thumb_x';
+  var target = function () {
+    var a = document.querySelector('.nav-item.active');
+    if (!a) return -1;
+    var r = rail.getBoundingClientRect(), b = a.getBoundingClientRect();
+    return (b.left - r.left) + (b.width - W) / 2;
+  };
+  var set = function (x, animate) {
     thumb.style.width = W + 'px';
+    if (x < 0) {
+      thumb.style.opacity = '0';
+      return;
+    }
+    thumb.style.opacity = '1';
     if (!animate) thumb.style.transition = 'none';
-    thumb.style.transform = 'translateX(' + Math.round(Math.max(0, x)) + 'px)';
+    thumb.style.transform = 'translateX(' + Math.round(x) + 'px)';
     if (!animate) {
       void thumb.offsetWidth;
       thumb.style.transition = '';
     }
   };
-  var max = function () { return rail.clientWidth - W; };
-  var car = document.getElementById('galleryCarousel');
-  var poem = document.getElementById('poemScroll');
-  var active = document.querySelector('.nav-item.active');
-  if (car) {
-    var n = car.querySelectorAll('.gallery-slide').length || 1;
-    var u = function (a) {
-      place((Math.round(car.scrollLeft / car.clientWidth) / (n - 1 || 1)) * max(), a);
-    };
-    car.addEventListener('scroll', function () { u(true); }, { passive: true });
-    u(false);
-    window.addEventListener('resize', function () { u(false); }, { passive: true });
-  } else if (poem) {
-    var u2 = function (a) {
-      place((poem.scrollTop / ((poem.scrollHeight - poem.clientHeight) || 1)) * max(), a);
-    };
-    poem.addEventListener('scroll', function () { u2(true); }, { passive: true });
-    u2(false);
-    window.addEventListener('resize', function () { u2(false); }, { passive: true });
-  } else if (active) {
-    var r = rail.getBoundingClientRect(), b = active.getBoundingClientRect();
-    place((b.left - r.left) + (b.width - W) / 2, false);
+  var t = target(), prev = parseFloat(sessionStorage.getItem(KEY));
+  if (t < 0) {
+    set(-1, false);
+  } else if (!isNaN(prev) && prev >= 0 && Math.abs(prev - t) > 1) {
+    set(prev, false);
+    requestAnimationFrame(function () { set(t, true); });
   } else {
-    thumb.style.opacity = '0';
+    set(t, false);
   }
+  if (t >= 0) sessionStorage.setItem(KEY, String(t));
+  window.addEventListener('resize', function () {
+    var t2 = target();
+    if (t2 >= 0) set(t2, false);
+  }, { passive: true });
+})();
+
+(function () {
+  var car = document.getElementById('galleryCarousel');
+  if (!car) return;
+  var slides = [].slice.call(car.querySelectorAll('.gallery-slide'));
+  var rots = [].slice.call(car.querySelectorAll('.gallery-slide--rot .gallery-img'));
+  var sizeRot = function () {
+    var portraitOk = document.body.classList.contains('allow-portrait');
+    rots.forEach(function (im) {
+      if (portraitOk) {
+        im.style.width = '';
+        im.style.height = '';
+        im.style.maxWidth = '';
+        im.style.maxHeight = '';
+        return;
+      }
+      if (!im.naturalWidth) return;
+      var s = im.closest('.gallery-slide'), W = s.clientWidth, H = s.clientHeight;
+      var r = im.naturalHeight / im.naturalWidth;
+      var hd = Math.min(W, H * r), wd = hd / r;
+      im.style.maxWidth = 'none';
+      im.style.maxHeight = 'none';
+      im.style.width = wd + 'px';
+      im.style.height = hd + 'px';
+    });
+  };
+  var idx = function () { return Math.round(car.scrollLeft / car.clientWidth); };
+  var upd = function () {
+    var ok = idx() >= slides.length - 2;
+    document.body.classList.toggle('allow-portrait', ok);
+    sizeRot();
+  };
+  car.addEventListener('scroll', upd, { passive: true });
+  window.addEventListener('resize', upd, { passive: true });
+  window.addEventListener('orientationchange', upd);
+  rots.forEach(function (im) {
+    im.addEventListener('load', sizeRot);
+    im.loading = 'eager';
+  });
+  upd();
 })();
