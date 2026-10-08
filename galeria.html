@@ -13,31 +13,34 @@
                  connect-src 'none';">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Istok+Web&family=Inter&family=Georgia&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Istok+Web&family=Inter&family=EB+Garamond&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <title>galeria — follow.white.rabbit</title>
 </head>
 <body data-page="galeria">
-  <nav id="bottombar" aria-label="Navega��o principal">
-  <ul class="nav-menu">
-    <li class="nav-item" data-page="video"><a href="video.html" aria-label="Ir para v�deo"><span class="dot" aria-hidden="true"></span><span class="label">video</span></a></li>
-    <li class="nav-item" data-page="galeria"><a href="galeria.html" aria-label="Ir para galeria"><span class="dot" aria-hidden="true"></span><span class="label">galeria</span></a></li>
-    <li class="nav-item" data-page="poema"><a href="poema.html" aria-label="Ir para poema"><span class="dot" aria-hidden="true"></span><span class="label">poema</span></a></li>
-  </ul>
-  <div class="nav-rail" aria-hidden="true"><div class="nav-thumb" id="navThumb"></div></div>
-</nav>
+  <nav id="bottombar" aria-label="Navegação principal">
+    <a class="nav-logo" href="index.html" aria-label="Início — follow.white.rabbit">
+      <img src="assets/svg/logo-coelho.svg" alt="" width="28" height="28">
+    </a>
+    <ul class="nav-menu">
+      <li class="nav-item" data-page="video"><a href="video.html" aria-label="Ir para vídeo"><span class="dot" aria-hidden="true"></span><span class="label">video</span></a></li>
+      <li class="nav-item" data-page="galeria"><a href="galeria.html" aria-label="Ir para galeria"><span class="dot" aria-hidden="true"></span><span class="label">galeria</span></a></li>
+      <li class="nav-item" data-page="poema"><a href="poema.html" aria-label="Ir para poema"><span class="dot" aria-hidden="true"></span><span class="label">poema</span></a></li>
+    </ul>
+    <div class="nav-rail" aria-hidden="true"><div class="nav-thumb" id="navThumb"></div></div>
+  </nav>
 
-  <main class="gallery-page">
-    <div class="gallery-grid">
-      <figure class="gallery-slide">
-        <img src="assets/img/2-Daruma.png" alt="Daruma — slide 1" loading="lazy" width="900" height="1200">
+  <main>
+    <div class="gallery-carousel" id="galleryCarousel" role="region" aria-label="Galeria de imagens" aria-live="polite">
+      <figure class="gallery-slide" aria-label="Imagem 1 de 8">
+        <img class="gallery-img" src="assets/img/2-Daruma.png" alt="Daruma — tattoo por Dyogo Viana" loading="eager" width="900" height="1200">
         <figcaption class="gallery-text">
-  <p>Junto ao peito, um Daruma, sem pés, a se inclinar:<br>tem eixo — raro — e embaixo o peso mora;<br>um olho aberto, o outro a repousar.<br>No ventre, 叶: o desejo que se cumpre agora;</p>
- </figcaption>
+          <p>Junto ao peito, um Daruma, sem pés, a se inclinar:<br>tem eixo — raro — e embaixo o peso mora;<br>um olho aberto, o outro a repousar.<br>No ventre, 叶: o desejo que se cumpre agora;</p>
+        </figcaption>
       </figure>
 
-      <figure class="gallery-slide">
-        <img src="assets/img/3-Mar.png" alt="Mar — slide 2" loading="lazy" width="900" height="1200">
+      <figure class="gallery-slide" aria-label="Imagem 2 de 8">
+        <img class="gallery-img" src="assets/img/3-Mar.png" alt="Mar — tattoo por Dyogo Viana" loading="lazy" width="900" height="1200">
         <figcaption class="gallery-text">
           <p>debaixo, o mar faz de cada gesto uma espiral,<br>
           e nada é à toa, mesmo sem saber a hora.<br>
@@ -47,8 +50,8 @@
         </figcaption>
       </figure>
 
-      <figure class="gallery-slide">
-        <img src="assets/img/4-Arabescos.png" alt="Arabescos — slide 3" loading="lazy" width="900" height="1200">
+      <figure class="gallery-slide" aria-label="Imagem 3 de 8">
+        <img class="gallery-img" src="assets/img/4-Arabescos.png" alt="Arabescos — tattoo por Dyogo Viana" loading="lazy" width="900" height="1200">
         <figcaption class="gallery-text">
           <p>Em volta, duas notas num arabesco breve:<br>
           duas cores, uma forma, e o compasso — meu — se expressa;<br>
@@ -56,8 +59,8 @@
         </figcaption>
       </figure>
 
-      <figure class="gallery-slide">
-        <img src="assets/img/5-Fio_da_Ariadne.png" alt="Fio da Ariadne — slide 4" loading="lazy" width="900" height="1200">
+      <figure class="gallery-slide" aria-label="Imagem 4 de 8">
+        <img class="gallery-img" src="assets/img/5-Fio_da_Ariadne.png" alt="Fio da Ariadne — tattoo por Dyogo Viana" loading="lazy" width="900" height="1200">
         <figcaption class="gallery-text">
           <p>Na base, ouro em círculos dentro de círculos; o fio começa,<br>
           dá voltas, segue até a luz, só o próximo metro alcança;<br>
@@ -65,8 +68,8 @@
         </figcaption>
       </figure>
 
-      <figure class="gallery-slide">
-        <img src="assets/img/6-Flor.png" alt="Flor — slide 5" loading="lazy" width="900" height="1200">
+      <figure class="gallery-slide" aria-label="Imagem 5 de 8">
+        <img class="gallery-img" src="assets/img/6-Flor.png" alt="Flor — tattoo por Dyogo Viana" loading="lazy" width="900" height="1200">
         <figcaption class="gallery-text">
           <p>Do lado de fora, onde o dia chega primeiro, a flor avança:<br>
           setembro: primavera — e tudo abre para o dia,<br>
@@ -74,8 +77,8 @@
         </figcaption>
       </figure>
 
-      <figure class="gallery-slide">
-        <img src="assets/img/7-Luz.png" alt="Luz — slide 6" loading="lazy" width="900" height="1200">
+      <figure class="gallery-slide" aria-label="Imagem 6 de 8">
+        <img class="gallery-img" src="assets/img/7-Luz.png" alt="Luz — tattoo por Dyogo Viana" loading="lazy" width="900" height="1200">
         <figcaption class="gallery-text">
           <p>A luz não some: fica pequena, e é ela que me guia;<br>
           num lado, noite e um ponto aceso; no outro, o céu aberto;<br>
@@ -83,8 +86,8 @@
         </figcaption>
       </figure>
 
-      <figure class="gallery-slide">
-        <img src="assets/img/8-Circulo.png" alt="Círculo — slide 7" loading="lazy" width="900" height="1200">
+      <figure class="gallery-slide" aria-label="Imagem 7 de 8">
+        <img class="gallery-img" src="assets/img/8-Circulo.png" alt="Círculo — tattoo por Dyogo Viana" loading="lazy" width="900" height="1200">
         <figcaption class="gallery-text">
           <p>Por inteiro, o braço é um círculo, e o que desce sobe, por certo;<br>
           sem começo, sem ponta, a curva que se fecha em si:<br>
@@ -93,8 +96,8 @@
         </figcaption>
       </figure>
 
-      <figure class="gallery-slide">
-        <img src="assets/img/9-Inteiro.png" alt="Inteiro — slide 8" loading="lazy" width="900" height="1200">
+      <figure class="gallery-slide" aria-label="Imagem 8 de 8">
+        <img class="gallery-img" src="assets/img/9-Inteiro.png" alt="Inteiro — tattoo por Dyogo Viana" loading="lazy" width="900" height="1200">
         <figcaption class="gallery-text">
           <p>O que desce não se perde: volta ao chão,<br>
           pois o peso sabe o caminho de voltar;<br>

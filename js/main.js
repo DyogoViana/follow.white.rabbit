@@ -1,25 +1,34 @@
-// ─── NAV: marcar página ativa (R-CLIN-03: estado visível) ────────────────
 (function markActive() {
   const page = document.body.dataset.page;
-  document.querySelectorAll('.nav-item').forEach(item => {
-    if (item.dataset.page === page) item.classList.add('active');
+  const items = [...document.querySelectorAll('.nav-item')];
+
+  items.forEach(item => {
+    const isActive = item.dataset.page === page;
+    item.classList.toggle('active', isActive);
   });
+
+  const activeIndex = items.findIndex(item => item.classList.contains('active'));
+  if (activeIndex >= 0) {
+    const ratio = items.length > 1 ? activeIndex / (items.length - 1) : 0;
+    setNavThumb(ratio);
+  }
 })();
 
-// ─── NAV THUMB: posição do indicador ─────────────────────────────────────
 function setNavThumb(ratio) {
   const thumb = document.getElementById('navThumb');
   if (!thumb) return;
+
   const track = thumb.closest('.nav-rail');
-  const max = track.clientHeight - thumb.clientHeight;
-  thumb.style.transform = `translateY(${Math.max(0, Math.min(max, max * ratio))}px)`;
+  if (!track) return;
+
+  const max = Math.max(0, track.clientWidth - thumb.clientWidth);
+  const x = Math.max(0, Math.min(max, max * ratio));
+  thumb.style.transform = `translateX(${x}px)`;
 }
 
-// ─── POEMA: scroll dinâmico ───────────────────────────────────────────────
 const poemScroll = document.getElementById('poemScroll');
 
 if (poemScroll) {
-
   const FONT_MIN = 7;
   const FONT_MAX = 15;
   const COLOR_FAR = [189, 189, 189];
@@ -29,9 +38,9 @@ if (poemScroll) {
   function lerp(a, b, t) { return a + (b - a) * t; }
 
   function lerpColor(c1, c2, t) {
-    return `rgb(${Math.round(lerp(c1[0],c2[0],t))},`
-         + `${Math.round(lerp(c1[1],c2[1],t))},`
-         + `${Math.round(lerp(c1[2],c2[2],t))})`;
+    return `rgb(${Math.round(lerp(c1[0], c2[0], t))},`
+      + `${Math.round(lerp(c1[1], c2[1], t))},`
+      + `${Math.round(lerp(c1[2], c2[2], t))})`;
   }
 
   function updatePoem() {
@@ -55,8 +64,7 @@ if (poemScroll) {
       el.style.color = color;
     });
 
-    const ratio = poemScroll.scrollTop /
-                  (poemScroll.scrollHeight - poemScroll.clientHeight);
+    const ratio = poemScroll.scrollTop / (poemScroll.scrollHeight - poemScroll.clientHeight);
     setNavThumb(isNaN(ratio) ? 0 : ratio);
   }
 
@@ -74,33 +82,58 @@ if (poemScroll) {
   }, { passive: true });
 
   updatePoem();
-
   window.addEventListener('resize', updatePoem, { passive: true });
 }
 
-if (!poemScroll) {
+const galleryCarousel = document.getElementById('galleryCarousel');
+if (galleryCarousel) {
+  const slides = [...galleryCarousel.querySelectorAll('.gallery-slide')];
+  const GALLERY_KEY = 'fwr_gallery_slide';
+  const savedIndex = parseInt(localStorage.getItem(GALLERY_KEY) || '0', 10);
+
+  if (slides[savedIndex]) {
+    galleryCarousel.scrollLeft = slides[savedIndex].offsetLeft;
+  }
+
+  let galleryTimer;
+  const updateGallery = () => {
+    const index = Math.round(galleryCarousel.scrollLeft / galleryCarousel.clientWidth);
+    const ratio = slides.length > 1 ? index / (slides.length - 1) : 0;
+    setNavThumb(ratio);
+    clearTimeout(galleryTimer);
+    galleryTimer = setTimeout(() => {
+      localStorage.setItem(GALLERY_KEY, index);
+    }, 400);
+  };
+
+  galleryCarousel.addEventListener('scroll', updateGallery, { passive: true });
+  updateGallery();
+}
+
+if (!poemScroll && !galleryCarousel) {
   const active = document.querySelector('.nav-item.active');
   if (active) {
-    const menu = document.querySelector('.nav-menu');
-    const rail = document.querySelector('.nav-rail');
-    const thumb = document.getElementById('navThumb');
-    if (thumb && rail && menu) {
-      const menuTop = menu.getBoundingClientRect().top;
-      const activeTop = active.getBoundingClientRect().top;
-      const railH = rail.clientHeight;
-      const ratio = (activeTop - menuTop) / (menu.clientHeight || 1);
-      setNavThumb(ratio);
-    }
+    const items = [...document.querySelectorAll('.nav-item')];
+    const index = items.findIndex(item => item === active);
+    const ratio = items.length > 1 ? index / (items.length - 1) : 0;
+    setNavThumb(ratio);
   }
 }
 
-/* JS-OVERRIDE v1 (2026-10-08) - append-only; apague este bloco p/ reverter */
-setNavThumb = function(){
-  var items=[].slice.call(document.querySelectorAll('.nav-item'));
-  var idx=-1; items.forEach(function(it,i){ if(it.classList.contains('active')) idx=i; });
-  var thumb=document.getElementById('navThumb'); if(!thumb) return;
-  if(idx<0){ thumb.style.opacity='0'; thumb.style.transform='translateX(0)'; return; }
-  thumb.style.opacity='1'; thumb.style.transform='translateX('+(idx*100)+'%)';
-};
-setNavThumb();
-window.addEventListener('resize', setNavThumb, {passive:true});
+window.addEventListener('resize', () => {
+  const poemRatio = poemScroll ?
+    (poemScroll.scrollTop / (poemScroll.scrollHeight - poemScroll.clientHeight || 1)) : null;
+
+  if (poemScroll) {
+    setNavThumb(isNaN(poemRatio) ? 0 : poemRatio);
+    return;
+  }
+
+  const active = document.querySelector('.nav-item.active');
+  if (active) {
+    const items = [...document.querySelectorAll('.nav-item')];
+    const index = items.findIndex(item => item === active);
+    const ratio = items.length > 1 ? index / (items.length - 1) : 0;
+    setNavThumb(ratio);
+  }
+}, { passive: true });
