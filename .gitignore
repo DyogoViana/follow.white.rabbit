@@ -34,3 +34,6 @@ coverage/
 
 # Arquivos locais
 *.local
+
+# Protocolo interno / handoff
+handoffs/
