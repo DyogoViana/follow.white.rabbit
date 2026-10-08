@@ -320,10 +320,13 @@ body[data-page="video"] main {
 /* ─── GALERIA ────────────────────────────────────────────────────────────── */
 body[data-page="galeria"] {
   background: #0E2D3A;
+  height: 100dvh;
+  overflow: hidden;
 }
 
 body[data-page="galeria"] main {
   background: #0E2D3A;
+  height: calc(100dvh - var(--nav-h));
   overflow: hidden;
   padding: 0;
 }
