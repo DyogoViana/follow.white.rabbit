@@ -355,11 +355,9 @@ body[data-page="galeria"] main {
   height: 100%;
   scroll-snap-align: start;
   scroll-snap-stop: always;
-  background: #0E2D3A;
 }
 
 .gallery-slide--rot {
-  background: #064A6F;
   overflow: hidden;
 }
 
@@ -394,6 +392,16 @@ body[data-page="galeria"] main {
     object-fit: contain;
   }
 }
+
+.gallery-slide:nth-of-type(1) { background: linear-gradient(90deg, #063E56, #075074); }
+.gallery-slide:nth-of-type(2) { background: linear-gradient(90deg, #06405B, #074F74); }
+.gallery-slide:nth-of-type(3) { background: linear-gradient(90deg, #074E71, #075075); }
+.gallery-slide:nth-of-type(4) { background: linear-gradient(90deg, #79624C, #075379); }
+.gallery-slide:nth-of-type(5) { background: linear-gradient(90deg, #042634, #064867); }
+.gallery-slide:nth-of-type(6) { background: linear-gradient(90deg, #183061, #065176); }
+.gallery-slide:nth-of-type(7) { background: linear-gradient(90deg, #05354E, #3B362B); }
+.gallery-slide:nth-of-type(8) { background: linear-gradient(90deg, #05374E, #064C71); }
+.gallery-slide:nth-of-type(9) { background: linear-gradient(90deg, #353128, #3C372C); }
 
 body[data-page="galeria"] .gallery-text {
   position: absolute;
