@@ -359,11 +359,12 @@ body[data-page="galeria"] main {
 }
 
 .gallery-slide--rot {
+  background: #064A6F;
   overflow: hidden;
 }
 
 .gallery-slide--rot .gallery-img {
-  transform: rotate(-90deg);
+  transform: rotate(90deg);
 }
 
 .gallery-img {
@@ -382,7 +383,7 @@ body[data-page="galeria"] main {
   .gallery-slide--rot .gallery-img {
     max-width: none;
     max-height: none;
-    object-fit: none;
+    object-fit: contain;
   }
 }
 
