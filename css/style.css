@@ -66,7 +66,7 @@ main {
   padding-bottom: calc(var(--nav-height) + env(safe-area-inset-bottom, 0px));
 }
 
-/* ─── NAV ─── */
+/* ─── NAVEGAÇÃO GLOBAL ─── */
 #nav {
   position: fixed;
   bottom: 0;
@@ -79,7 +79,7 @@ main {
   padding: 0 var(--page-padding);
   padding-bottom: env(safe-area-inset-bottom, 0px);
   z-index: 1000;
-  background: #222222; /* Fundo padrão escuro para páginas internas */
+  background: #222222; /* Fundo padrão escuro */
 }
 
 .nav-logo {
@@ -105,7 +105,6 @@ main {
   opacity: 1;
 }
 
-/* Distribui os botões uniformemente no espaço disponível */
 .nav-menu {
   list-style: none;
   margin: 0;
@@ -113,9 +112,9 @@ main {
   display: flex;
   flex-direction: row;
   align-items: center;
-  flex: 1; /* Ocupa todo o espaço restante ao lado da logo */
-  justify-content: space-evenly; /* Distribui os itens com espaçamento igual */
-  gap: 0; /* O espaço é controlado pelo space-evenly */
+  flex: 1; /* Ocupa o espaço restante ao lado da logo */
+  justify-content: space-evenly; /* Distribui os itens uniformemente */
+  gap: 0.5rem;
 }
 
 .nav-item a {
@@ -126,7 +125,7 @@ main {
   min-width: var(--touch-min);
   min-height: var(--touch-min);
   text-decoration: none;
-  color: #4F4F4F;
+  color: #828282; /* Cor padrão inativa */
   font-size: 0.75rem;
   line-height: 1;
 }
@@ -151,15 +150,20 @@ main {
   opacity: 0.3;
 }
 
-/* Força a cor verde no item ativo, sobrescrevendo qualquer cache */
-.nav-item.active .nav-label {
+/* ─── ESTADO ATIVO (VIA CSS ATRIBUTE SELECTOR - SEM JS) ─── */
+/* Aplica o verde se o data-page do body bater com o data-page do item */
+body[data-page="video"] .nav-item[data-page="video"] .nav-label,
+body[data-page="galeria"] .nav-item[data-page="galeria"] .nav-label,
+body[data-page="poema"] .nav-item[data-page="poema"] .nav-label {
   color: var(--c-galeria-accent) !important;
   font-weight: 600;
 }
 
-.nav-item.active .nav-dot {
+body[data-page="video"] .nav-item[data-page="video"] .nav-dot,
+body[data-page="galeria"] .nav-item[data-page="galeria"] .nav-dot,
+body[data-page="poema"] .nav-item[data-page="poema"] .nav-dot {
   background-color: var(--c-galeria-accent) !important;
-  opacity: 1;
+  opacity: 1 !important;
 }
 
 @media (min-width: 600px) {
@@ -184,20 +188,8 @@ main {
 }
 
 :focus-visible {
-  outline: 2px solid #8BBF12;
+  outline: 2px solid var(--c-galeria-accent);
   outline-offset: 2px;
-}
-
-/* Fundo da navbar para a home (claro) */
-body[data-page="index"] #nav {
-  background: #D9D9D9;
-}
-
-/* Fundo da navbar para páginas internas (escuro) */
-body[data-page="video"] #nav,
-body[data-page="galeria"] #nav,
-body[data-page="poema"] #nav {
-  background: #222222;
 }
 
 /* Proteção contra menus duplicados no HTML */
@@ -208,6 +200,10 @@ nav:not(#nav) {
 /* ─── HOME ───────────────────────────────────────────────────────────────── */
 body[data-page="index"] {
   background: var(--c-bg-light);
+}
+
+body[data-page="index"] #nav {
+  background: #D9D9D9;
 }
 
 body[data-page="index"] main {
@@ -461,9 +457,9 @@ body[data-page="poema"] main {
 
 .share-btn:hover,
 .share-btn:focus-visible {
-  background: #8BBF12;
-  border-color: #8BBF12;
-  color: #18191A;
+  background: var(--c-galeria-accent);
+  border-color: var(--c-galeria-accent);
+  color: var(--c-title);
 }
 
 @media (prefers-reduced-motion: reduce) {
