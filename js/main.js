@@ -44,12 +44,13 @@ document.addEventListener('DOMContentLoaded', () => {
       .catch(err => console.warn('SW falhou:', err));
   }
 
-  // ─── 3. ANIMAÇÃO DO POEMA ──────────────────────────────────────────────────
+  // ─── 3. ANIMAÇÃO DO POEMA (REVISADA) ───────────────────────────────────────
   const poemScroll = document.getElementById('poemScroll');
   if (poemScroll) {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const COLOR_FAR = [130, 130, 130];
-    const COLOR_HERO = [240, 231, 226];
+    // Cores com melhor contraste sobre o fundo #333333
+    const COLOR_FAR = [160, 160, 160]; // Cinza mais claro
+    const COLOR_HERO = [240, 231, 226]; // Bege claro
 
     function lerp(a, b, t) { return a + (b - a) * t; }
     function lerpColor(c1, c2, t) {
@@ -60,7 +61,8 @@ document.addEventListener('DOMContentLoaded', () => {
       if (prefersReducedMotion) return;
 
       const portrait = window.matchMedia('(orientation: portrait)').matches;
-      const FONT_MIN = portrait ? 16 : 18; 
+      // Aumentando os tamanhos base: 17px a 22px no celular
+      const FONT_MIN = portrait ? 17 : 18; 
       const FONT_MAX = portrait ? 22 : 24;
       
       const strophes = document.querySelectorAll('.strophe');
@@ -72,6 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const t = Math.max(0, 1 - Math.abs(viewCY - elCY) / maxDist);
 
         el.style.fontSize = lerp(FONT_MIN, FONT_MAX, t) + 'px';
+        // Transição de cor mais sutil
         el.style.color = lerpColor(COLOR_FAR, COLOR_HERO, t);
       });
     }

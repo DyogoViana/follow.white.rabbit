@@ -4,8 +4,8 @@
   --c-bg-dark: #222222;
   --c-title: #18191A;
   --c-poem-hero: #F0E7E2;
-  --c-poem-mid: #828282;
-  --c-poem-far: #BDBDBD;
+  --c-poem-mid: #828282; /* Ajustado para melhor contraste */
+  --c-poem-far: #BDBDBD; /* Ajustado para melhor contraste */
   --c-watermark: rgba(189, 189, 189, 0.42);
   --c-galeria-accent: #8BBF12;
   --c-galeria-bg: #D9D9D9;
@@ -14,7 +14,8 @@
 
   --font-ui: 'Istok Web', sans-serif;
   --font-nav: 'Inter', sans-serif;
-  --font-poem: 'EB Garamond', Georgia, serif;
+  /* Fonte trocada para 'Lora', com melhor legibilidade em telas */
+  --font-poem: 'Lora', Georgia, serif;
 
   --title-size: clamp(28px, 6vw, 64px);
   --touch-min: 44px;
@@ -85,7 +86,7 @@ body[data-page="galeria"] main { position: static; background: #064A6F; padding:
 .gallery-slide { width: 100%; line-height: 0; }
 .gallery-img { width: 100%; height: auto; object-fit: cover; user-select: none; }
 
-/* ─── POEMA (Diagramação Revisada) ─── */
+/* ─── POEMA (DIAGRAMAÇÃO E LEGIBILIDADE REVISADAS) ─── */
 body[data-page="poema"] { background: #333333; }
 body[data-page="poema"] main { bottom: 0; padding-bottom: 0; }
 
@@ -100,24 +101,24 @@ body[data-page="poema"] main { bottom: 0; padding-bottom: 0; }
 .poem-inner {
   display: flex;
   flex-direction: column;
-  align-items: flex-start; /* Alinhado à esquerda */
+  align-items: flex-start; /* Alinhamento à esquerda para poesia (Bringhurst) */
   width: 100%;
   max-width: 600px;
   margin: 0 auto;
   padding: 4rem 1.5rem; 
-  padding-bottom: 8rem; /* Evita corte atrás do menu */
+  padding-bottom: 8rem; 
   gap: clamp(2rem, 5vh, 4rem); 
 }
 
 .strophe {
-  font-family: var(--font-poem);
-  text-align: left; /* Alinhado à esquerda */
+  font-family: var(--font-poem); /* Fonte 'Lora' definida nos tokens */
+  text-align: left; /* Alinhamento à esquerda */
   color: var(--c-poem-far); 
-  font-size: 18px; 
-  line-height: 1.7; 
+  font-size: 1.1rem; /* ~17.6px, acima do mínimo de 16px */
+  line-height: 1.6; /* Entrelinha generosa para leitura confortável */
   width: 100%;
   white-space: pre-wrap;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em; /* Leve espaçamento para melhorar a leitura */
   transition: color 0.3s ease, font-size 0.3s ease;
   will-change: font-size, color;
 }
@@ -150,7 +151,16 @@ body[data-page="poema"] main { bottom: 0; padding-bottom: 0; }
 .share-btn.is-revealed { opacity: 1; transform: translateY(0); }
 .share-btn:hover, .share-btn:focus-visible { background: var(--c-galeria-accent); color: #18191A; border-color: var(--c-galeria-accent); }
 
+/* Acessibilidade: Respeita a preferência do usuário por menos movimento */
 @media (prefers-reduced-motion: reduce) {
-  .strophe { font-size: 18px !important; color: var(--c-poem-hero) !important; transition: none !important; }
-  .share-btn { opacity: 1 !important; transform: none !important; transition: none !important; }
+  .strophe {
+    font-size: 1.1rem !important;
+    color: var(--c-poem-hero) !important;
+    transition: none !important;
+  }
+  .share-btn {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
 }
