@@ -1,9 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-  // ─── 1. COMPONENTE DE MENU ─────────────────────────────────────────────────
+  // ─── 1. COMPONENTE DE MENU (INJEÇÃO VIA JS) ────────────────────────────────
   function buildMenu() {
     const navElement = document.getElementById('nav');
     if (!navElement) return;
+
     const currentPage = document.body.dataset.page || 'index';
     const menuItems = [
       { id: 'video', label: 'video', url: 'video.html' },
@@ -17,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
       </a>
       <ul class="nav-menu">
     `;
+
     menuItems.forEach(item => {
       const isActive = currentPage === item.id;
       html += `
@@ -28,23 +30,25 @@ document.addEventListener('DOMContentLoaded', () => {
         </li>
       `;
     });
+
     html += `</ul>`;
     navElement.innerHTML = html;
   }
+
   buildMenu();
 
-  // ─── 2. SERVICE WORKER ─────────────────────────────────────────────────────
+  // ─── 2. SERVICE WORKER (CACHE) ─────────────────────────────────────────────
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/sw.js')
       .then(reg => console.log('SW registrado:', reg.scope))
       .catch(err => console.warn('SW falhou:', err));
   }
 
-  // ─── 3. ANIMAÇÃO DO POEMA (REVISADA) ───────────────────────────────────────
+  // ─── 3. ANIMAÇÃO DO POEMA ──────────────────────────────────────────────────
   const poemScroll = document.getElementById('poemScroll');
   if (poemScroll) {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const COLOR_FAR = [130, 130, 130];   // Um pouco mais claro para ler no fundo escuro
+    const COLOR_FAR = [130, 130, 130];
     const COLOR_HERO = [240, 231, 226];
 
     function lerp(a, b, t) { return a + (b - a) * t; }
@@ -53,11 +57,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function updatePoem() {
-      // Se o usuário pediu menos movimento, não anima via JS (o CSS já resolve)
       if (prefersReducedMotion) return;
 
       const portrait = window.matchMedia('(orientation: portrait)').matches;
-      // Salto menor: 16px a 22px no celular (foco sutil)
       const FONT_MIN = portrait ? 16 : 18; 
       const FONT_MAX = portrait ? 22 : 24;
       
@@ -70,7 +72,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const t = Math.max(0, 1 - Math.abs(viewCY - elCY) / maxDist);
 
         el.style.fontSize = lerp(FONT_MIN, FONT_MAX, t) + 'px';
-        // Transição de cor mais suave
         el.style.color = lerpColor(COLOR_FAR, COLOR_HERO, t);
       });
     }
@@ -82,11 +83,86 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // ─── 4. VÍDEO E SWIPE (Mantidos) ───────────────────────────────────────────
-  // ... (Cole aqui o restante do código de sizeVideo, navigatePage e swipe da resposta anterior) ...
-  // ... (Vou omitir para não poluir, mas eles continuam iguais) ...
+  // ─── 4. CONTROLE DO VÍDEO E SWIPE ──────────────────────────────────────────
+  const videoWrapper = document.querySelector('.video-wrapper');
+  const videoFrame = document.querySelector('.video-wrapper iframe');
 
-  // ─── 5. BOTÃO DE COMPARTILHAR ──────────────────────────────────────────────
+  function sizeVideo() {
+    if (!videoWrapper || !videoFrame) return;
+    const aspect = 16 / 9;
+    const w = videoWrapper.clientWidth;
+    const h = videoWrapper.clientHeight;
+    let width, height;
+
+    if (w / h > aspect) {
+      height = h; width = h * aspect;
+    } else {
+      width = w; height = w / aspect;
+    }
+    videoFrame.style.width = `${Math.round(width)}px`;
+    videoFrame.style.height = `${Math.round(height)}px`;
+  }
+
+  if (videoFrame) videoFrame.addEventListener('load', sizeVideo);
+  if (videoWrapper) {
+    window.addEventListener('resize', sizeVideo, { passive: true });
+    sizeVideo();
+  }
+
+  function navigatePage(direction) {
+    const order = ['index', 'video', 'galeria', 'poema'];
+    const page = document.body.dataset.page;
+    const index = order.indexOf(page);
+    const nextIndex = direction === 'next' ? Math.min(index + 1, order.length - 1) : Math.max(index - 1, 0);
+    if (nextIndex === index) return;
+
+    const map = { index: 'index.html', video: 'video.html', galeria: 'galeria.html', poema: 'poema.html' };
+    window.location.href = map[order[nextIndex]];
+  }
+
+  const EDGE_ZONE = 32;
+  let touchStartX = 0, touchStartY = 0;
+
+  document.addEventListener('touchstart', (e) => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  }, { passive: true });
+
+  document.addEventListener('touchend', (e) => {
+    const touch = e.changedTouches[0];
+    const deltaX = touch.clientX - touchStartX;
+    const deltaY = touch.clientY - touchStartY;
+    const absX = Math.abs(deltaX);
+    const absY = Math.abs(deltaY);
+
+    if (Math.max(absX, absY) < 60) return;
+    
+    if (document.body.dataset.page === 'poema' && absX > absY && touchStartX <= EDGE_ZONE && deltaX > 0) {
+      navigatePage('prev'); return;
+    }
+    if (document.body.dataset.page === 'galeria') return;
+
+    if (absX > absY) {
+      if (touchStartX <= EDGE_ZONE && deltaX > 0) navigatePage('prev');
+      if (touchStartX >= window.innerWidth - EDGE_ZONE && deltaX < 0) navigatePage('next');
+    } else {
+      if (touchStartY <= EDGE_ZONE && deltaY > 0) navigatePage('prev');
+      if (touchStartY >= window.innerHeight - EDGE_ZONE && deltaY < 0) navigatePage('next');
+    }
+  }, { passive: true });
+
+  // ─── 5. CONTROLE DO VIMEO (PAUSE) ──────────────────────────────────────────
+  (function () {
+    const vf = document.getElementById('vimeoPlayer');
+    if (!vf) return;
+    function pauseVimeo() {
+      try { vf.contentWindow.postMessage(JSON.stringify({ method: 'pause' }), 'https://player.vimeo.com'); } catch (e) {}
+    }
+    document.addEventListener('visibilitychange', function () { if (document.hidden) pauseVimeo(); });
+    window.addEventListener('pagehide', pauseVimeo);
+  })();
+
+  // ─── 6. BOTÃO DE COMPARTILHAR ──────────────────────────────────────────────
   const shareBtn = document.querySelector('.share-btn');
   if (shareBtn) {
     if ('IntersectionObserver' in window) {
@@ -97,7 +173,23 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       shareBtn.classList.add('is-revealed');
     }
-    // ... (Mantenha a lógica de clique original do share) ...
+    
+    shareBtn.addEventListener('click', async () => {
+      const payload = {
+        title: 'follow.white.rabbit',
+        text: 'Tatuagens de Dyogo Viana',
+        url: window.location.href
+      };
+      if (navigator.share) {
+        try { await navigator.share(payload); } catch (e) {}
+      } else {
+        try { 
+          await navigator.clipboard.writeText(payload.url);
+          const label = shareBtn.querySelector('.share-label');
+          if(label) { const orig = label.textContent; label.textContent = 'copiado'; setTimeout(() => label.textContent = orig, 1500); }
+        } catch (e) {}
+      }
+    });
   }
 });
 
