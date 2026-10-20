@@ -1,10 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
-  
+
   // ─── 1. SERVICE WORKER (CACHE) ─────────────────────────────────────────────
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/follow.white.rabbit/sw.js')
-      .then(reg => console.log('SW registrado', reg))
-      .catch(err => console.warn('SW falhou', err));
+    navigator.serviceWorker.register('/sw.js')
+      .then(reg => console.log('SW registrado:', reg.scope))
+      .catch(err => console.warn('SW falhou:', err));
   }
 
   // ─── 2. ANIMAÇÃO DO POEMA ──────────────────────────────────────────────────
@@ -112,7 +112,26 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }, { passive: true });
 
-  // ─── 4. BOTÃO DE COMPARTILHAR ──────────────────────────────────────────────
+  // ─── 4. CONTROLE DO VIMEO (PAUSE) ──────────────────────────────────────────
+  (function () {
+    const vf = document.getElementById('vimeoPlayer');
+    if (!vf) return;
+
+    function pauseVimeo() {
+      try {
+        vf.contentWindow.postMessage(JSON.stringify({ method: 'pause' }), 'https://player.vimeo.com');
+      } catch (error) {
+        console.error('Unable to pause Vimeo playback.', error);
+      }
+    }
+
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) pauseVimeo();
+    });
+    window.addEventListener('pagehide', pauseVimeo);
+  })();
+
+  // ─── 5. BOTÃO DE COMPARTILHAR ──────────────────────────────────────────────
   const shareBtn = document.querySelector('.share-btn');
   if (shareBtn) {
     if ('IntersectionObserver' in window) {
@@ -146,6 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+/* IMG-FRICTION v8 */
 document.addEventListener('contextmenu', (e) => {
   if (e.target.closest && e.target.closest('.gallery-img')) e.preventDefault();
 });

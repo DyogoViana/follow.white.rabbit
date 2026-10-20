@@ -68,7 +68,7 @@ main {
   height: calc(var(--nav-height) + env(safe-area-inset-bottom, 0px));
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-between; /* Logo à esquerda, menu à direita */
   padding: 0 var(--page-padding);
   padding-bottom: env(safe-area-inset-bottom, 0px);
   z-index: 1000;
@@ -82,7 +82,7 @@ main {
 }
 
 .nav-logo img {
-  width: 24px; /* Tamanho reduzido e clean */
+  width: 24px; /* Logo menor, clean */
   height: 24px;
   border-radius: 50%;
   filter: grayscale(1) opacity(0.55);
@@ -94,9 +94,9 @@ main {
 .nav-menu {
   list-style: none;
   display: flex;
-  flex-direction: row;
+  flex-direction: row; /* Itens lado a lado */
   align-items: center;
-  gap: 1rem; /* Espaçamento clean */
+  gap: 1rem; /* Espaçamento uniforme */
 }
 
 .nav-item a {
@@ -202,15 +202,15 @@ body[data-page="poema"] main { bottom: 0; padding-bottom: 0; }
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 40dvh 1rem 6rem; /* Padding ajustado */
-  gap: 2.5rem; /* Vazios reduzidos */
+  padding: 40dvh 1rem 6rem;
+  gap: 2.5rem;
 }
 
 .strophe {
   font-family: var(--font-poem);
   text-align: center;
   color: var(--c-poem-far);
-  font-size: 16px; /* O JS ajusta isso */
+  font-size: 16px;
   line-height: 1.6;
   max-width: min(560px, calc(100vw - 2rem));
   white-space: pre-wrap;
