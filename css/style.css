@@ -78,7 +78,7 @@ main {
   justify-content: space-between;
   padding: 0 var(--page-padding);
   padding-bottom: env(safe-area-inset-bottom, 0px);
-  z-index: 100;
+  z-index: 1000;
 }
 
 .nav-logo {
@@ -112,6 +112,8 @@ main {
   flex-direction: row;
   gap: 1.5rem;
   align-items: center;
+  flex: 1; /* Adicionado para preencher o espaço e centralizar */
+  justify-content: center; /* Adicionado para alinhar os botões no centro */
 }
 
 .nav-item a {
@@ -145,6 +147,11 @@ main {
 
 .nav-item[data-page] .nav-dot {
   opacity: 0.3;
+}
+
+/* Cores do item ativo */
+.nav-item.active a {
+  color: var(--c-galeria-accent); /* Aplica o verde ao texto e ao ponto (via currentColor) */
 }
 
 .nav-item.active .nav-dot {
@@ -193,6 +200,11 @@ body[data-page="video"] #nav,
 body[data-page="galeria"] #nav,
 body[data-page="poema"] #nav {
   background: #222222;
+}
+
+/* Proteção contra menus duplicados no HTML */
+nav:not(#nav) {
+  display: none !important;
 }
 
 /* ─── HOME ───────────────────────────────────────────────────────────────── */
@@ -463,23 +475,4 @@ body[data-page="poema"] main {
     animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
   }
-}
-
-/* ─── PATCH DE CORREÇÃO DE NAVEGAÇÃO ─────────────────────────────────────── */
-/* Força o menu principal a ficar fixo no rodapé, horizontal e acima de tudo */
-#nav {
-  position: fixed !important;
-  top: auto !important;
-  bottom: 0 !important;
-  left: 0 !important;
-  right: 0 !important;
-  width: 100% !important;
-  display: flex !important;
-  flex-direction: row !important;
-  z-index: 9999 !important;
-}
-
-/* Esconde qualquer menu lateral ou duplicado que esteja sobrando no HTML */
-nav:not(#nav) {
-  display: none !important;
 }
