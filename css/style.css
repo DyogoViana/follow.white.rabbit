@@ -79,6 +79,7 @@ main {
   padding: 0 var(--page-padding);
   padding-bottom: env(safe-area-inset-bottom, 0px);
   z-index: 1000;
+  background: #222222; /* Fundo padrão escuro para páginas internas */
 }
 
 .nav-logo {
@@ -104,16 +105,17 @@ main {
   opacity: 1;
 }
 
+/* Distribui os botões uniformemente no espaço disponível */
 .nav-menu {
   list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
   flex-direction: row;
-  gap: 1.5rem;
   align-items: center;
-  flex: 1; /* Adicionado para preencher o espaço e centralizar */
-  justify-content: center; /* Adicionado para alinhar os botões no centro */
+  flex: 1; /* Ocupa todo o espaço restante ao lado da logo */
+  justify-content: space-evenly; /* Distribui os itens com espaçamento igual */
+  gap: 0; /* O espaço é controlado pelo space-evenly */
 }
 
 .nav-item a {
@@ -149,24 +151,18 @@ main {
   opacity: 0.3;
 }
 
-/* Cores do item ativo */
-.nav-item.active a {
-  color: var(--c-galeria-accent); /* Aplica o verde ao texto e ao ponto (via currentColor) */
-}
-
-.nav-item.active .nav-dot {
-  opacity: 1;
-}
-
+/* Força a cor verde no item ativo, sobrescrevendo qualquer cache */
 .nav-item.active .nav-label {
+  color: var(--c-galeria-accent) !important;
   font-weight: 600;
 }
 
-@media (min-width: 600px) {
-  .nav-menu {
-    gap: 2rem;
-  }
+.nav-item.active .nav-dot {
+  background-color: var(--c-galeria-accent) !important;
+  opacity: 1;
+}
 
+@media (min-width: 600px) {
   .nav-item a {
     flex-direction: row;
     gap: 8px;
@@ -192,10 +188,12 @@ main {
   outline-offset: 2px;
 }
 
+/* Fundo da navbar para a home (claro) */
 body[data-page="index"] #nav {
   background: #D9D9D9;
 }
 
+/* Fundo da navbar para páginas internas (escuro) */
 body[data-page="video"] #nav,
 body[data-page="galeria"] #nav,
 body[data-page="poema"] #nav {
