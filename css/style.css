@@ -464,3 +464,22 @@ body[data-page="poema"] main {
     scroll-behavior: auto !important;
   }
 }
+
+/* ─── PATCH DE CORREÇÃO DE NAVEGAÇÃO ─────────────────────────────────────── */
+/* Força o menu principal a ficar fixo no rodapé, horizontal e acima de tudo */
+#nav {
+  position: fixed !important;
+  top: auto !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  display: flex !important;
+  flex-direction: row !important;
+  z-index: 9999 !important;
+}
+
+/* Esconde qualquer menu lateral ou duplicado que esteja sobrando no HTML */
+nav:not(#nav) {
+  display: none !important;
+}
