@@ -7,7 +7,7 @@
   --c-poem-mid: #828282;
   --c-poem-far: #BDBDBD;
   --c-watermark: rgba(189, 189, 189, 0.42);
-  --c-galeria-accent: #8BBF12; /* Ref: Albers - Contraste e interação da cor */
+  --c-galeria-accent: #8BBF12;
   --c-galeria-bg: #D9D9D9;
   --nav-height: 56px;
   --page-padding: 1rem;
@@ -17,7 +17,7 @@
   --font-poem: 'EB Garamond', Georgia, serif;
 
   --title-size: clamp(28px, 6vw, 64px);
-  --touch-min: 44px; /* Ref: Norman (DOET) - Affordance e área de toque mínima */
+  --touch-min: 44px;
   --transition: 0.25s ease;
 }
 
@@ -42,53 +42,35 @@ main {
 #nav {
   position: fixed; bottom: 0; left: 0; right: 0;
   height: calc(var(--nav-height) + env(safe-area-inset-bottom, 0px));
-  display: flex; 
-  align-items: center; 
-  justify-content: space-between; /* Ref: Krug (Don't Make Me Think) - Escaneabilidade limpa */
-  padding: 0 var(--page-padding); 
-  padding-bottom: env(safe-area-inset-bottom, 0px);
-  z-index: 1000; 
-  background: #222222;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 var(--page-padding); padding-bottom: env(safe-area-inset-bottom, 0px);
+  z-index: 1000; background: #222222;
 }
-
 .nav-logo { display: flex; align-items: center; text-decoration: none; }
 .nav-logo img {
-  width: 24px; height: 24px; border-radius: 50%; /* Ref: Lee (As Formas da Alegria) - Formas arredondadas geram conforto visual */
+  width: 24px; height: 24px; border-radius: 50%;
   filter: grayscale(1) opacity(0.55); transition: filter var(--transition), opacity var(--transition);
 }
 .nav-logo:hover img { filter: none; opacity: 1; }
-
-.nav-menu {
-  list-style: none; display: flex; flex-direction: row; align-items: center; gap: 1rem;
-}
-
+.nav-menu { list-style: none; display: flex; flex-direction: row; align-items: center; gap: 1rem; }
 .nav-item a {
   display: flex; flex-direction: row; align-items: center; gap: 6px;
   min-width: var(--touch-min); min-height: var(--touch-min); justify-content: center;
   text-decoration: none; color: #828282; font-size: 0.85rem; transition: color 0.2s;
 }
-
 .nav-label { font-family: var(--font-nav); letter-spacing: 0.04em; white-space: nowrap; }
 .nav-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; opacity: 0.3; transition: opacity 0.2s; }
-
-/* ESTADO ATIVO (Injetado pelo JS) */
-.nav-item.active a { 
-  color: var(--c-galeria-accent); 
-  font-weight: 600; /* Ref: Krug - Feedback visual inconfundível */
-}
-.nav-item.active .nav-dot { 
-  opacity: 1; 
-  background-color: var(--c-galeria-accent); 
-}
-
+.nav-item.active a { color: var(--c-galeria-accent); font-weight: 600; }
+.nav-item.active .nav-dot { opacity: 1; background-color: var(--c-galeria-accent); }
 :focus-visible { outline: 2px solid var(--c-galeria-accent); outline-offset: 2px; }
 
-/* ─── HOME, VIDEO, GALERIA (Inalterados na estrutura, mas com CSS limpo) ─── */
-/* ... (Mantenha o restante do CSS de Home, Video, Galeria e Poema exatamente como estava na resposta anterior, pois eles já estavam corretos) ... */
-
+/* ─── HOME / VIDEO / GALERIA ─── */
 body[data-page="index"] { background: var(--c-bg-light); }
 body[data-page="index"] #nav { background: #D9D9D9; }
 body[data-page="index"] main { display: flex; align-items: center; justify-content: center; }
+.home-watermark { position: absolute; font-family: var(--font-ui); font-size: clamp(120px, 30vw, 260px); color: var(--c-watermark); user-select: none; pointer-events: none; z-index: 0; }
+.home-title-wrap { position: relative; z-index: 1; margin: 0; }
+.home-title { display: inline-block; font-family: var(--font-ui); font-size: var(--title-size); color: var(--c-title); text-decoration: none; }
 
 body[data-page="video"], body[data-page="video"] main { background: #000000; }
 body[data-page="video"] main { padding: 0; }
@@ -101,16 +83,82 @@ body[data-page="galeria"] main { position: static; background: #064A6F; padding:
 .gallery-slide { width: 100%; line-height: 0; }
 .gallery-img { width: 100%; height: auto; object-fit: cover; user-select: none; }
 
+/* ─── POEMA (REVISADO) ─── */
 body[data-page="poema"] { background: #333333; }
 body[data-page="poema"] main { bottom: 0; padding-bottom: 0; }
-.poem-scroll { width: 100%; height: 100dvh; overflow-y: scroll; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
-.poem-scroll::-webkit-scrollbar { display: none; }
-.poem-inner { display: flex; flex-direction: column; align-items: center; padding: 40dvh 1rem 6rem; gap: 2.5rem; }
-.strophe { font-family: var(--font-poem); text-align: center; color: var(--c-poem-far); font-size: 16px; line-height: 1.6; max-width: min(560px, calc(100vw - 2rem)); white-space: pre-wrap; transition: font-size 0.2s ease, color 0.2s ease; }
 
-.poem-finale { display: flex; flex-direction: column; align-items: center; width: 100vw; margin-inline: calc(50% - 50vw); padding: 4rem 1rem; padding-bottom: calc(var(--nav-height) + 2rem); gap: 3rem; }
+.poem-scroll {
+  width: 100%; height: 100dvh;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.poem-scroll::-webkit-scrollbar { display: none; }
+
+.poem-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Reduzido o topo para o usuário ver o texto mais rápido */
+  padding: 15dvh 1.5rem 6rem; 
+  /* Gap proporcional e menor para não criar "buracos" visuais */
+  gap: clamp(2rem, 5vh, 4rem); 
+}
+
+.strophe {
+  font-family: var(--font-poem);
+  text-align: center;
+  color: var(--c-poem-far); /* O JS vai sobrescrever */
+  font-size: 18px; /* Base confortável para leitura */
+  line-height: 1.7; /* Melhor entrelinha para serifa */
+  max-width: min(560px, calc(100vw - 3rem));
+  white-space: pre-wrap;
+  letter-spacing: 0.02em;
+  transition: color 0.3s ease, font-size 0.3s ease;
+  will-change: font-size, color;
+}
+
+.poem-finale {
+  display: flex; flex-direction: column; align-items: center;
+  width: 100vw; margin-inline: calc(50% - 50vw);
+  padding: 4rem 1rem; padding-bottom: calc(var(--nav-height) + 2rem);
+  gap: 3rem;
+}
+
 .finale-media { display: flex; flex-direction: row; width: 100%; background: #0E2D3A; }
 .finale-media img { flex: 1 1 50%; width: 50%; height: 60dvh; object-fit: contain; }
-.share-btn { min-height: var(--touch-min); padding: 0.75rem 1.25rem; border: 1px solid var(--c-poem-far); border-radius: 999px; background: transparent; color: var(--c-poem-hero); cursor: pointer; opacity: 0; transform: translateY(8px); transition: opacity 0.25s ease, transform 0.25s ease; }
+
+.share-btn {
+  min-height: var(--touch-min); /* Garantia de área de toque acessível */
+  min-width: var(--touch-min);
+  padding: 0.75rem 1.5rem;
+  border: 1px solid var(--c-poem-far);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--c-poem-hero);
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.25s ease, transform 0.25s ease, background-color 0.2s;
+}
+
 .share-btn.is-revealed { opacity: 1; transform: translateY(0); }
-.share-btn:hover { background: var(--c-galeria-accent); color: #18191A; border-color: var(--c-galeria-accent); }
+.share-btn:hover, .share-btn:focus-visible { 
+  background: var(--c-galeria-accent); 
+  color: #18191A; 
+  border-color: var(--c-galeria-accent); 
+}
+
+/* Acessibilidade: Respeita a preferência do usuário por menos movimento */
+@media (prefers-reduced-motion: reduce) {
+  .strophe {
+    font-size: 18px !important; /* Tamanho fixo */
+    color: var(--c-poem-hero) !important; /* Cor de alto contraste fixa */
+    transition: none !important;
+  }
+  .share-btn {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
