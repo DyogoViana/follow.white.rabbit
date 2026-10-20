@@ -3,15 +3,14 @@
   --c-bg-light: #D9D9D9;
   --c-bg-dark: #222222;
   --c-title: #18191A;
-  --c-nav-label: #4F4F4F;
-  --c-nav-rail: #353233;
   --c-poem-hero: #F0E7E2;
   --c-poem-mid: #828282;
   --c-poem-far: #BDBDBD;
   --c-watermark: rgba(189, 189, 189, 0.42);
   --c-galeria-accent: #8BBF12;
   --c-galeria-bg: #D9D9D9;
-  --nav-h: 63px;
+  --nav-height: 56px;
+  --page-padding: 1rem;
 
   --font-ui: 'Istok Web', sans-serif;
   --font-nav: 'Inter', sans-serif;
@@ -22,6 +21,18 @@
   --transition: 0.25s ease;
 }
 
+@media (min-width: 600px) {
+  :root {
+    --nav-height: 64px;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --page-padding: 2rem;
+  }
+}
+
 /* ─── RESET ─────────────────────────────────────────────────────────────── */
 *, *::before, *::after {
   box-sizing: border-box;
@@ -30,12 +41,13 @@
 }
 
 html, body {
-  height: 100%;
-  overflow: hidden;
+  min-height: 100%;
+  overflow-x: hidden;
 }
 
 body {
   display: block;
+  min-height: 100dvh;
   font-family: var(--font-ui);
   background: var(--c-bg-light);
   padding-left: env(safe-area-inset-left, 0px);
@@ -49,43 +61,36 @@ img {
 
 main {
   position: fixed;
-  inset: 0 0 var(--nav-h) 0;
+  inset: 0 0 var(--nav-height) 0;
   overflow: hidden;
+  padding-bottom: calc(var(--nav-height) + env(safe-area-inset-bottom, 0px));
 }
 
-#bottombar {
+/* ─── NAV ─── */
+#nav {
   position: fixed;
+  bottom: 0;
   left: 0;
   right: 0;
-  bottom: 0;
-  height: var(--nav-h);
+  height: calc(var(--nav-height) + env(safe-area-inset-bottom, 0px));
   display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  z-index: 10;
-  background: transparent;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--page-padding);
   padding-bottom: env(safe-area-inset-bottom, 0px);
+  z-index: 100;
 }
 
 .nav-logo {
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: clamp(64px, 15.6vw, 133px);
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: var(--touch-min);
-  min-height: var(--touch-min);
   text-decoration: none;
-  z-index: 2;
-  overflow: hidden;
 }
 
 .nav-logo img {
-  width: 30px;
-  height: 30px;
+  width: 32px;
+  height: 32px;
   display: block;
   border-radius: 50%;
   filter: grayscale(1) opacity(0.55);
@@ -101,125 +106,65 @@ main {
 
 .nav-menu {
   list-style: none;
+  margin: 0;
+  padding: 0;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
-  align-items: flex-end;
-  width: 586px;
-  max-width: calc(100% - 2 * clamp(64px, 15.6vw, 133px));
-  margin: 0 auto;
-  padding: 0;
-  flex: 1;
+  gap: 1.5rem;
+  align-items: center;
 }
 
-.nav-item {
-  flex: 1 1 0;
-}
-
-.nav-item a,
-.nav-item a:link,
-.nav-item a:visited {
+.nav-item a {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-end;
-  gap: 6px;
-  min-height: var(--touch-min);
+  gap: 4px;
   min-width: var(--touch-min);
+  min-height: var(--touch-min);
   text-decoration: none;
   color: #4F4F4F;
-  padding: 8px 12px;
-  transition: opacity var(--transition), color var(--transition);
+  font-size: 0.75rem;
+  line-height: 1;
 }
 
-.nav-item a:active {
-  opacity: 0.6;
-}
-
-.nav-item.active a,
-.nav-item.active a:visited {
-  color: #8BBF12;
-}
-
-@media (hover: hover) {
-  .nav-item a:hover {
-    opacity: 0.75;
-  }
-}
-
-.nav-item .label {
+.nav-label {
   font-family: var(--font-nav);
-  font-size: 12px;
-  color: #4F4F4F;
   font-weight: 400;
   letter-spacing: 0.04em;
   white-space: nowrap;
-  writing-mode: horizontal-tb;
-  transform: none;
 }
 
-.nav-item.active .label {
-  color: #8BBF12;
-  font-weight: 400;
-}
-
-.nav-item .dot {
-  width: 7px;
-  height: 7px;
+.nav-dot {
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
-  background: #4F4F4F;
-  transition: background var(--transition);
+  background: currentColor;
+  opacity: 0.3;
+  transition: opacity 0.2s;
 }
 
-.nav-item.active .dot {
-  background: #8BBF12;
+.nav-item[data-page] .nav-dot {
+  opacity: 0.3;
 }
 
-.nav-item a:hover .dot,
-.nav-item a:focus-visible .dot {
-  background: #8BBF12;
+.nav-item.active .nav-dot {
+  opacity: 1;
 }
 
-.nav-item a:hover .label,
-.nav-item a:focus-visible .label {
-  color: #8BBF12;
+.nav-item.active .nav-label {
+  font-weight: 600;
 }
 
-.nav-item .dot,
-.nav-item .label {
-  transition: none;
-}
+@media (min-width: 600px) {
+  .nav-menu {
+    gap: 2rem;
+  }
 
-.nav-logo:hover img,
-.nav-logo:focus-visible img {
-  filter: none;
-  transform: scale(1.06);
-}
-
-.nav-rail {
-  position: relative;
-  width: 586px;
-  max-width: 100%;
-  height: 3px;
-  background: #353233;
-  border-radius: 50px;
-  margin: 0 auto;
-}
-
-.nav-thumb {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 3px;
-  width: 69px;
-  background: #8BBF12;
-  border-radius: 50px;
-  transition: transform var(--transition), opacity var(--transition);
-  will-change: transform;
-}
-
-body[data-page="home"] .nav-thumb {
-  opacity: 0;
+  .nav-item a {
+    flex-direction: row;
+    gap: 8px;
+    font-size: 0.875rem;
+  }
 }
 
 .sr-only {
@@ -240,22 +185,22 @@ body[data-page="home"] .nav-thumb {
   outline-offset: 2px;
 }
 
-body[data-page="home"] #bottombar {
+body[data-page="index"] #nav {
   background: #D9D9D9;
 }
 
-body[data-page="video"] #bottombar,
-body[data-page="galeria"] #bottombar,
-body[data-page="poema"] #bottombar {
+body[data-page="video"] #nav,
+body[data-page="galeria"] #nav,
+body[data-page="poema"] #nav {
   background: #222222;
 }
 
 /* ─── HOME ───────────────────────────────────────────────────────────────── */
-body[data-page="home"] {
+body[data-page="index"] {
   background: var(--c-bg-light);
 }
 
-body[data-page="home"] main {
+body[data-page="index"] main {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -320,77 +265,57 @@ body[data-page="video"] main {
 /* ─── GALERIA ────────────────────────────────────────────────────────────── */
 body[data-page="galeria"] {
   background: #064A6F;
-  height: 100dvh;
-  overflow: hidden;
+  height: auto;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 body[data-page="galeria"] main {
+  position: static;
+  inset: auto;
+  height: auto;
+  min-height: 0;
   background: #064A6F;
-  height: calc(100dvh - var(--nav-h));
-  overflow: hidden;
+  overflow: visible;
   padding: 0;
 }
 
-.gallery-carousel {
+.gallery {
   display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding-bottom: calc(var(--nav-height) + env(safe-area-inset-bottom, 0px));
   width: 100%;
-  height: 100%;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-  touch-action: pan-x;
-  scrollbar-width: none;
-}
-
-.gallery-carousel::-webkit-scrollbar {
-  display: none;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .gallery-slide {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #064A6F;
-  flex: 0 0 100%;
+  margin: 0;
+  padding: 0;
   width: 100%;
-  height: 100%;
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
+  line-height: 0;
 }
 
-.gallery-slide--rot {
-  overflow: hidden;
-}
-
-.gallery-slide--rot .gallery-img {
-  transform: rotate(-90deg);
+.gallery-slide--wide .gallery-img {
+  object-fit: contain;
+  background: #000000;
 }
 
 .gallery-img {
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
+  width: 100%;
   height: auto;
-  object-fit: contain;
   display: block;
-  -webkit-touch-callout: none;
+  object-fit: cover;
+  -webkit-user-drag: none;
   user-select: none;
   -webkit-user-select: none;
 }
 
-@media (orientation: landscape) {
-  .gallery-slide--rot .gallery-img {
-    max-width: none;
-    max-height: none;
-    object-fit: contain;
-  }
-}
-
-@media (orientation: portrait) {
-  body[data-page="galeria"].allow-portrait .gallery-slide--rot .gallery-img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
+@media (min-width: 600px) {
+  .gallery {
+    max-width: 480px;
   }
 }
 
@@ -418,6 +343,7 @@ body[data-page="poema"] {
 
 body[data-page="poema"] main {
   bottom: 0;
+  padding-bottom: 0;
 }
 
 .poem-scroll {
@@ -470,7 +396,7 @@ body[data-page="poema"] main {
   margin-inline: calc(50% - 50vw);
   padding: clamp(2rem, 8vh, 6rem) 1rem;
   gap: clamp(2rem, 6vh, 5rem);
-  padding-bottom: calc(63px + 2rem);
+  padding-bottom: calc(var(--nav-height) + env(safe-area-inset-bottom, 0px) + 2rem);
   background: transparent;
 }
 
@@ -512,43 +438,7 @@ body[data-page="poema"] main {
   transform: translateY(0);
 }
 
-@media (max-width: 480px) {
-  .nav-item a,
-  .nav-item a:link,
-  .nav-item a:visited {
-    gap: 4px;
-    padding: 6px clamp(2px, 1vw, 6px);
-  }
-
-  .nav-item .label {
-    font-size: clamp(10px, 3vw, 12px);
-  }
-}
-
 @media (orientation: portrait) {
-  body[data-page="galeria"]:not(.allow-portrait) {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vh;
-    height: 100vw;
-    transform-origin: top left;
-    transform: rotate(90deg) translateY(-100%);
-    overflow: hidden;
-  }
-
-  body[data-page="galeria"].allow-portrait {
-    position: static;
-    width: auto;
-    height: auto;
-    transform: none;
-    overflow: visible;
-  }
-
-  body[data-page="galeria"].allow-portrait .gallery-slide--rot .gallery-img {
-    transform: none;
-  }
-
   .finale-media {
     flex-direction: column;
   }

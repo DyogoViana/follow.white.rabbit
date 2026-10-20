@@ -29,20 +29,34 @@
   <meta name="twitter:image" content="https://dyogoviana.github.io/follow.white.rabbit/assets/img/logo-coelho.png">
 </head>
 <body data-page="galeria">
-  <nav id="bottombar" aria-label="Navegação principal">
+  <nav id="nav" aria-label="Navegação principal">
     <a class="nav-logo" href="index.html" aria-label="Início — follow.white.rabbit">
-      <img src="assets/img/logo-coelho.png" alt="" width="30" height="30">
+      <img src="assets/img/logo-coelho.png" alt="" width="40" height="40">
     </a>
     <ul class="nav-menu">
-      <li class="nav-item" data-page="video"><a href="video.html" aria-label="Ir para vídeo"><span class="dot" aria-hidden="true"></span><span class="label">video</span></a></li>
-      <li class="nav-item" data-page="galeria"><a href="galeria.html" aria-label="Ir para galeria"><span class="dot" aria-hidden="true"></span><span class="label">galeria</span></a></li>
-      <li class="nav-item" data-page="poema"><a href="poema.html" aria-label="Ir para poema"><span class="dot" aria-hidden="true"></span><span class="label">poema</span></a></li>
+      <li class="nav-item" data-page="video">
+        <a href="video.html" aria-label="Ir para vídeo">
+          <span class="nav-dot" aria-hidden="true"></span>
+          <span class="nav-label">video</span>
+        </a>
+      </li>
+      <li class="nav-item" data-page="galeria">
+        <a href="galeria.html" aria-label="Ir para galeria">
+          <span class="nav-dot" aria-hidden="true"></span>
+          <span class="nav-label">galeria</span>
+        </a>
+      </li>
+      <li class="nav-item" data-page="poema">
+        <a href="poema.html" aria-label="Ir para poema">
+          <span class="nav-dot" aria-hidden="true"></span>
+          <span class="nav-label">poema</span>
+        </a>
+      </li>
     </ul>
-    <div class="nav-rail" aria-hidden="true"><div class="nav-thumb" id="navThumb"></div></div>
   </nav>
 
   <main>
-    <div class="gallery-carousel" id="galleryCarousel" role="region" aria-label="Galeria de imagens" aria-live="polite">
+    <div class="gallery" id="gallery" role="region" aria-label="Galeria de imagens" aria-live="polite">
       <figure class="gallery-slide" aria-label="Imagem 1 de 10">
         <img class="gallery-img" src="assets/img/01 - Daruma.png" alt="Daruma — tattoo por Dyogo Viana" loading="eager" width="900" height="1200" decoding="async" draggable="false">
         <figcaption class="gallery-text sr-only">
@@ -107,12 +121,12 @@
         </figcaption>
       </figure>
 
-      <figure class="gallery-slide gallery-slide--rot" aria-label="Imagem 8 de 10">
+      <figure class="gallery-slide gallery-slide--wide" aria-label="Imagem 8 de 10">
         <img class="gallery-img" src="assets/img/08 - imagem frente.png"
              alt="Inteiro — frente — tattoo por Dyogo Viana" loading="lazy" width="1125" height="2436"
              decoding="async" draggable="false">
       </figure>
-      <figure class="gallery-slide gallery-slide--rot" aria-label="Imagem 9 de 10">
+      <figure class="gallery-slide gallery-slide--wide" aria-label="Imagem 9 de 10">
         <img class="gallery-img" src="assets/img/09 - imagem verso.png"
              alt="Inteiro — verso — tattoo por Dyogo Viana" loading="lazy" width="1125" height="2436"
              decoding="async" draggable="false">
